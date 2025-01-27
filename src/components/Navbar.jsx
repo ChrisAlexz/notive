@@ -1,7 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react';
 import '../styles/Navbar.css'
 import logo from '../assets/notive.png'
+import profilePic from '../assets/profilePic.jpg'
+import DropdownMenu from './DropdownMenu';
+/* global FinisherHeader */
 const Navbar = () => {
+
   return (
     <div className="navbar">
 
@@ -13,12 +17,9 @@ const Navbar = () => {
             <li>Flashcards</li>
             <li>About</li>
         </ul>
-        <div className="search-box">
-            <input type="text" placeholder='Search'/>
-            <img src="" alt="" />
-        </div>
+        <DropdownMenu />
 
-        <img src="" alt="" className='toggle-icon'/>
+        
     </div>
   )
 }
