@@ -1,0 +1,16 @@
+.welcome-container {
+    color: white;
+    display:flex;
+    justify-content: center;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+.recents {
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 50px;
+}
+.home-container {
+    color: white;
+    
+}
