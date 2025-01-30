@@ -1,0 +1,31 @@
+/* ABOUT CONTAINER: Centers everything and sets a max width */
+.about-container {
+    max-width: 800px;        /* or any width you prefer */
+    margin: 0 auto;          /* centers the container on the page */
+    padding: 2rem 1rem;      /* top/bottom padding of 2rem, left/right of 1rem */
+    text-align: center;      /* centers all text within this container */
+  }
+  
+  /* WELCOME CONTAINER: Adds spacing around the "About us" section */
+  .welcome-container {
+    margin-bottom: 2rem;     /* space below the heading */
+  }
+  
+  /* ABOUT DETAILS: Optional styling for the second section */
+  .about-details {
+    margin-bottom: 2rem;  
+    color: white;   /* space below this section if more content follows */
+  }
+  
+  /* TWEAK SPACING FOR HEADINGS */
+  .about-details h2 {
+    margin-bottom: 1rem;     /* give a bit of space under the heading */
+  }
+  
+  /* TWEAK SPACING FOR PARAGRAPHS */
+  .para, .about-details p {
+    margin-bottom: 1.5rem;
+    line-height: 1.6;        /* slightly increase line-height for readability */
+    color: white;
+  }
+  

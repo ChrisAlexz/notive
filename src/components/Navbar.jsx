@@ -9,15 +9,22 @@ import DropdownMenu from './DropdownMenu';
 const Navbar = () => {
   return (
     <div className="navbar">
-      <img src={logo} alt="Logo" className='logo' />
+      <Link to="/">
+          <img src={logo} alt="Logo" className="logo" />
+      </Link>
       <ul>
         <li>
           <Link to="/">Home</Link> {/* Link to Home route */}
         </li>
-        <li>Your Library</li>
-        <li>Notifications</li>
-        <li>Flashcards</li>
-        <li>About</li>
+        <li>
+          <Link to="/YourLibrary">Library</Link>
+        </li>
+        <li>
+          <Link to='/flashcards'>Flashcards</Link>
+        </li>
+        <li>
+        <Link to='/About'>About</Link>
+        </li>
       </ul>
       <DropdownMenu />
     </div>

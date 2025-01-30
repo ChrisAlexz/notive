@@ -6,10 +6,9 @@
     "cra-template": "1.2.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-<<<<<<< HEAD
+
     "react-router-dom": "^7.1.3",
-=======
->>>>>>> f803c48dea03863fc6f1c1f6ed0529043e65a7c9
+
     "react-scripts": "5.0.1"
   },
   "scripts": {
