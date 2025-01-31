@@ -1,6 +1,8 @@
 // Navbar.jsx
 
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEnvelope, faFolderOpen, faCircleInfo, faHouse, faBolt } from '@fortawesome/free-solid-svg-icons'
 import '../styles/Navbar.css';
 import { Link } from 'react-router-dom'; // Import Link
 import logo from '../assets/notive.png';
@@ -14,16 +16,16 @@ const Navbar = () => {
       </Link>
       <ul>
         <li>
-          <Link to="/">Home</Link> {/* Link to Home route */}
+          <Link to="/"><FontAwesomeIcon icon={faHouse} />  Home</Link> {/* Link to Home route */}
         </li>
         <li>
-          <Link to="/YourLibrary">Library</Link>
+          <Link to="/YourLibrary"><FontAwesomeIcon icon={faFolderOpen} />  Library</Link>
         </li>
         <li>
-          <Link to='/flashcards'>Flashcards</Link>
+          <Link to='/flashcards'><FontAwesomeIcon icon={faBolt} />  Flashcards</Link>
         </li>
         <li>
-        <Link to='/About'>About</Link>
+        <Link to='/About'><FontAwesomeIcon icon={faCircleInfo} />  About</Link>
         </li>
       </ul>
       <DropdownMenu />
