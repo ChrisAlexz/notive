@@ -3,6 +3,7 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
+import 'bootstrap/dist/css/bootstrap.min.css';
 import Home from "./components/Home";
 import About from "./components/About";
 import Navbar from "./components/Navbar";
@@ -13,7 +14,7 @@ function App() {
 
   
   return (
-    <div className="container">
+    <div className="app-container">
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />

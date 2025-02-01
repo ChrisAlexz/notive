@@ -11,7 +11,7 @@ const DropdownMenu = () => {
           className="profile-pic"
           onClick={() => setIsOpen(!isOpen)}
         />
-        <div className={`dropdown-menu ${isOpen ? 'active' : ''}`}>
+        <div className={`custom-dropdown-menu  ${isOpen ? 'active' : ''}`}>
           <ul>
             <li>Settings</li>
             <li>Help and Feedback</li>

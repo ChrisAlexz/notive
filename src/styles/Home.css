@@ -1,18 +1,39 @@
+.home-container {
+  display: flex;
+  flex-direction: column; /* Stack elements vertically */
+  align-items: center; /* Centers elements horizontally */
+  height: 100vh; /* Full viewport height */
+  padding: 20px 50px; /* Adds padding */
+  margin-top: 30px;
+  position: relative;
+}
 
-/* Home.css */
 .welcome-container {
-    color: white;
-    display:flex;
-    justify-content: center;
-    padding-top: 50px;
-    padding-bottom: 50px;
+  position: absolute;
+  top: 20px; /* Positions it at the top */
+  left: 50%;
+  transform: translateX(-50%); /* Ensures it's perfectly centered */
+  text-align: center;
+  color: white;
+}
+
+.button-container {
+  position: absolute;
+  top: 20px; /* Keeps it aligned with "Welcome!" */
+  right: 129px; /* Adds spacing from the right */
 }
 .recents {
-    display: flex;
-    justify-content: flex-start;
-    padding-left: 50px;
+  position: absolute;
+  top: 120px; /* Positions it below "Welcome!" */
+  left: 50px; /* Aligns it to the left */
+  color: white;
 }
-.home-container {
-    color: white;
-    
+.create-flashcard {
+  background-color: #ffc107 !important; /* Solid yellow background */
+  border-color: #ffc107 !important; /* Yellow border */
+  color: black !important; /* Ensure text is visible */
+}
+
+.create-flashcard:hover {
+  background-color: #ffca2c !important; /* Slightly darker yellow on hover */
 }
