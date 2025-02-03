@@ -33,11 +33,11 @@ const FlashcardItem = ({index, front, back, updateFlashcard, title, type }) => {
 
     return (
         <div className="flashcard-item">
-            <h3>Flashcard {index +1}</h3>
+            <h3>{index +1}</h3>
             <div className="front-back">
                 <div className="front">
                     <label>
-                        Front: 
+                        Front
                         <textarea 
                         ref={frontRef}
                         value={front}
@@ -49,7 +49,7 @@ const FlashcardItem = ({index, front, back, updateFlashcard, title, type }) => {
                 </div>
             <div className="back">
                 <label>
-                    Back:
+                    Back
                     <textarea
                     ref={backRef}
                     value={back}

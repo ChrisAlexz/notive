@@ -43,6 +43,7 @@ export default function Flashcard() {
         })
             setFlashcards(newFlashcards)
     }
+    const inputsDisabled = !title.trim();
 
     return (
         <div className="flashcard-page">
@@ -51,8 +52,8 @@ export default function Flashcard() {
                 <h2>Create Flashcards</h2>
             </div>
             <FlashcardTitle title={title} setTitle={setTitle} />
-            <FlashcardType type={type} setType={setType} />
-            <FlashcardInput addFlashcard={addFlashcard} />
+            <FlashcardType type={type} setType={setType}  disabled={inputsDisabled}/>
+            <FlashcardInput addFlashcard={addFlashcard} disabled={inputsDisabled} />
             {showSuccess && <SuccessPopup />}
         </div>
         <div>

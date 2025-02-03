@@ -1,7 +1,7 @@
 export default function FlashcardTitle({ title, setTitle }) {
     return (
         <div className="flashcard-title-container">
-            <label className="flashcard-title-label">Flashcard Title:</label>
+            <label className="flashcard-title-label">Set Name</label>
             <input 
                 type="text"
                 placeholder="Enter title"

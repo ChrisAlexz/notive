@@ -2,10 +2,11 @@
 
 .flashcard-item {
     color: white;
-    width: 1000px;
+    width: 1100px;
     min-height: 130px;
-    border: 1px solid blue;
-    background-color: rgb(102, 96, 180);
+    border: 5px solid #2e3856;
+    background-color: #2e3856;
+
     margin-bottom: 20px;
     padding: 10px;
     box-sizing: border-box;
@@ -16,9 +17,12 @@
     margin-top: 50px
 
 }
-.front,
+.front {
+
+}
 .back{
     margin: 0 20px;
+    margin-right: 50px;
 }
 .flashcard-page{
     display: flex;
@@ -33,7 +37,7 @@
 }
 /* Updated textarea styling */
 .flashcard-item textarea {
-    width: 100%;
+    width: 120%;
     min-height: 50px;
     border: 1px solid #ccc;
     padding: 5px;
