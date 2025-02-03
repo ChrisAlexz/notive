@@ -57,7 +57,7 @@ export default function Flashcard() {
             {showSuccess && <SuccessPopup />}
         </div>
         <div>
-            <FlashcardList flashcards={flashcards} updateFlashcard={updateFlashcard} />
+            <FlashcardList multiline={false} flashcards={flashcards} updateFlashcard={updateFlashcard} />
         </div>
         </div>
     );
