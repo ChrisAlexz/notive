@@ -33,7 +33,19 @@ export default function Flashcard() {
         }
     };
 
+    // Updates a flashcard when field change
+    const updateFlashcard = (index, updatedCard) => {
+        const newFlashcards = flashcards.map((card,idx)=> {
+            if (idx === index) {
+                return {...card, ...updatedCard}
+            }
+            return card
+        })
+            setFlashcards(newFlashcards)
+    }
+
     return (
+        <div className="flashcard-page">
         <div className="flashcard-container">
             <div className="flashcard-header">
                 <h2>Create Flashcards</h2>
@@ -41,8 +53,11 @@ export default function Flashcard() {
             <FlashcardTitle title={title} setTitle={setTitle} />
             <FlashcardType type={type} setType={setType} />
             <FlashcardInput addFlashcard={addFlashcard} />
-            <FlashcardList flashcards={flashcards} />
             {showSuccess && <SuccessPopup />}
+        </div>
+        <div>
+            <FlashcardList flashcards={flashcards} updateFlashcard={updateFlashcard} />
+        </div>
         </div>
     );
 }

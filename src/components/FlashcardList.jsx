@@ -1,15 +1,22 @@
-export default function FlashcardList({ flashcards }) {
-    if (flashcards.length === 0) return null; // Hide if no flashcards
+import FlashcardItem from './FlashcardItem';
+import '../styles/FlashcardList.css'
 
+const FlashcardList = ({ flashcards, updateFlashcard }) => {
     return (
         <div className="flashcard-list">
-            <h2>Flashcards:</h2>
-            {flashcards.map((card, index) => (
-                <div key={index} className="flashcard-item">
-                    <p><strong>Front:</strong> {card.front}</p>
-                    <p><strong>Back:</strong> {card.back}</p>
-                </div>
-            ))}
+            {flashcards.length === 0 ? (
+                <p>No flashcards added yet.</p>
+            ) : (
+                flashcards.map((card, index) => (
+                    <FlashcardItem key={index}
+                    index={index}
+                     front={card.front} 
+                     back={card.back}
+                     updateFlashcard={updateFlashcard} />
+                ))
+            )}
         </div>
     );
-}
+};
+
+export default FlashcardList;
