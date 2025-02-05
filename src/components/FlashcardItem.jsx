@@ -33,7 +33,7 @@ const FlashcardItem = ({index, front, back, updateFlashcard, title, type }) => {
 
     return (
         <div className="flashcard-item">
-            <h3>{index +1}</h3>
+            <h3 className="index-num">{index +1}</h3>
             <div className="front-back">
                 <div className="front">
                     <label>

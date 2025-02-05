@@ -48,3 +48,10 @@
     background-color: #2e3856; /* Matches flashcard background */
     color: white; /* Ensures text is visible */
 }
+.index-num {
+    display: inline-block; /* or block, if you want it to take up the full width */
+    border-bottom: 1px solid black;
+    padding-bottom: 4px;  /* optional: adds space between the text and the line */
+    margin-bottom: 8px;   /* optional: adds space below the line */
+    width: 100%;
+}

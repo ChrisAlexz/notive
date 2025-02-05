@@ -6,6 +6,7 @@
   align-items: center;
   justify-content: space-between;
   background: #0c0b0b;
+  height: 80px;
   padding: 15px 7%;
   /* Remove height: 100px; */
 }
@@ -31,7 +32,7 @@ ul li {
     transition: color 0.3s ease; /* Smooth color transition on hover */
 }
 .logo {
-  max-height: 80px; /* try reducing from 100px */
+  max-height: 60px; /* try reducing from 100px */
   max-width: 160px;
   object-fit: contain;
   cursor: pointer;
