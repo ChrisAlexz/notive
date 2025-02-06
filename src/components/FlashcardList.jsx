@@ -1,7 +1,9 @@
+//FlashcardList.jsx
+
 import FlashcardItem from './FlashcardItem';
 import '../styles/FlashcardList.css'
 
-const FlashcardList = ({ flashcards, updateFlashcard }) => {
+const FlashcardList = ({ flashcards, updateFlashcard , onDelete}) => {
     return (
         <div className="flashcard-list">
             {flashcards.length === 0 ? (
@@ -12,7 +14,8 @@ const FlashcardList = ({ flashcards, updateFlashcard }) => {
                     index={index}
                      front={card.front} 
                      back={card.back}
-                     updateFlashcard={updateFlashcard} />
+                     updateFlashcard={updateFlashcard}
+                     onDelete={onDelete} />
                 ))
             )}
         </div>

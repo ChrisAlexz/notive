@@ -1,7 +1,9 @@
+// FlashcardItem.jsx
+
 import { useRef, useEffect } from 'react';
 import '../styles/FlashcardList.css';
 
-const FlashcardItem = ({index, front, back, updateFlashcard, title, type }) => {
+const FlashcardItem = ({index, front, back, updateFlashcard, title, type, onDelete }) => {
     const frontRef = useRef(null)
     const backRef = useRef(null)
 
@@ -44,6 +46,7 @@ const FlashcardItem = ({index, front, back, updateFlashcard, title, type }) => {
                         onChange={handleFrontChange}
                         maxLength={1850}
                         style={{overflow: 'hidden', resize: 'none'}}
+                        onDelete={onDelete}
                     />
                     </label>
                 </div>
@@ -56,8 +59,10 @@ const FlashcardItem = ({index, front, back, updateFlashcard, title, type }) => {
                     onChange={handleBackChange}
                     maxLength={1850}
                     style={{overflow: 'hidden', resize: 'none'}}
+                    onDelete={onDelete}
                     />
                 </label>
+                <button onClick={()=> onDelete(index)}>Delete</button>
             </div>
             
             </div>
