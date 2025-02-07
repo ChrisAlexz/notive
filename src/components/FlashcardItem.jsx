@@ -2,6 +2,9 @@
 
 import { useRef, useEffect } from 'react';
 import '../styles/FlashcardList.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
+
 
 const FlashcardItem = ({index, front, back, updateFlashcard, title, type, onDelete }) => {
     const frontRef = useRef(null)
@@ -35,7 +38,8 @@ const FlashcardItem = ({index, front, back, updateFlashcard, title, type, onDele
 
     return (
         <div className="flashcard-item">
-            <h3 className="index-num">{index +1}</h3>
+            <h3 className="index-num">{index +1} <button className='delete' onClick={()=> onDelete(index)}><FontAwesomeIcon icon={faTrash} /></button></h3>
+            
             <div className="front-back">
                 <div className="front">
                     <label>
@@ -62,7 +66,6 @@ const FlashcardItem = ({index, front, back, updateFlashcard, title, type, onDele
                     onDelete={onDelete}
                     />
                 </label>
-                <button onClick={()=> onDelete(index)}>Delete</button>
             </div>
             
             </div>

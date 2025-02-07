@@ -55,3 +55,10 @@
     margin-bottom: 8px;   /* optional: adds space below the line */
     width: 100%;
 }
+.delete {
+    width: 50px;
+    display: inline-block;
+    margin-left:93%;
+    margin-bottom: 5px;
+
+}
