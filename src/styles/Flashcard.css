@@ -144,6 +144,21 @@ button:hover {
   padding: 10px;
   font-size: 16px;
   border-radius: 6px;
+  margin-left: 10px;
   border: 1px solid #ccc;
   background: white;
+}
+.flashcard-title-container, .flashcard-type-container {
+  margin-left: 0;       /* reset this */
+  margin-top: 0;        /* reset if you want them aligned neatly */
+  display: flex;        /* or block/flex, up to you */
+  justify-content: flex-start;
+}
+.flashcard-header-row {
+  width: 95%;
+  display: flex;
+  align-items: center;     /* vertically center them */
+  justify-content: center; /* center them horizontally, or use space-between if you want them spread out */
+  gap: 20px;               /* space between Title and Type */
+  margin-bottom: 20px;     /* some spacing below */
 }

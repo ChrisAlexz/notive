@@ -1,3 +1,5 @@
+import '../styles/Flashcard.css';
+
 export default function FlashcardTitle({ title, setTitle }) {
     return (
         <div className="flashcard-title-container">

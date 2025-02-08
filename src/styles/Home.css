@@ -17,12 +17,14 @@
   transform: translateX(-50%); /* Ensures it's perfectly centered */
   text-align: center;
   color: white;
+  
 }
 
 .button-container {
   position: absolute;
   top: 20px; /* Keeps it aligned with "Welcome!" */
   right: 129px; /* Adds spacing from the right */
+  
 }
 .recents {
   position: absolute;
@@ -31,11 +33,20 @@
   color: white;
 }
 .create-flashcard {
-  background-color: #ffc107 !important; /* Solid yellow background */
-  border-color: #ffc107 !important; /* Yellow border */
-  color: black !important; /* Ensure text is visible */
-}
+  background-color: #ffc107 !important; /* Already set, just showing for clarity */
+  border-color: #ffc107 !important;    /* Already set */
+  color: black !important;            /* Already set */
 
+  /* Added styles */
+  width: 70px;              /* Set a fixed width */
+  height: 70px;             /* Set a fixed height */
+  border-radius: 50%;       /* Makes the button circular */
+  display: flex;            /* Flex to center the icon */
+  align-items: center;      /* Center vertically */
+  justify-content: center;  /* Center horizontally */
+  font-size: 24px;          /* Increase icon size */
+  padding: 0;               /* Remove default padding */
+}
 .create-flashcard:hover {
   background-color: #ffca2c !important; /* Slightly darker yellow on hover */
 }

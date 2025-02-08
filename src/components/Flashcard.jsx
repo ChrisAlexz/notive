@@ -90,8 +90,11 @@ export default function Flashcard() {
         <div className="flashcard-header">
           <h2>Create Flashcards</h2>
         </div>
-        <FlashcardTitle title={title} setTitle={setTitle} />
-        <FlashcardType type={type} setType={setType} disabled={inputsDisabled} />
+        <div className="flashcard-header-row">
+          <FlashcardTitle title={title} setTitle={setTitle} />
+          <FlashcardType type={type} setType={setType} disabled={inputsDisabled} />
+        </div>
+
         <FlashcardInput addFlashcard={addFlashcard} disabled={inputsDisabled} />
         {showSuccess && <SuccessPopup />}
       </div>

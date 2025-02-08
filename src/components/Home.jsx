@@ -3,7 +3,7 @@
 import '../styles/Home.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons'; 
-import { useNavigate } from 'react-router-dom'; //
+import { useNavigate } from 'react-router-dom'; 
 
 export default function Home() {
   const navigate = useNavigate();
@@ -13,7 +13,7 @@ export default function Home() {
         <h2>Welcome!</h2>
       </div>
       <div className='button-container'>
-        <button className="btn btn-outline-warning btn-lg create-flashcard" onClick={()=>navigate('./flashcards')}><FontAwesomeIcon icon={faPlus} /> Create </button>
+        <button className="btn btn-outline-warning btn-lg create-flashcard" onClick={()=>navigate('./flashcards')}><FontAwesomeIcon icon={faPlus} /> </button>
       </div>
       <div className='recents'>
         <h2>Recents</h2>
