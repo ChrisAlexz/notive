@@ -19,7 +19,7 @@ const Navbar = () => {
           <Link to="/"><FontAwesomeIcon icon={faHouse} />  Home</Link> {/* Link to Home route */}
         </li>
         <li>
-          <Link to="/YourLibrary"><FontAwesomeIcon icon={faFolderOpen} />  Sets</Link>
+          <Link to="/Set"><FontAwesomeIcon icon={faFolderOpen} />  Sets</Link>
         </li>
         <li>
           <Link to='/flashcards'><FontAwesomeIcon icon={faBolt} />  Flashcards</Link>

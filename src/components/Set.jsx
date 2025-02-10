@@ -1,8 +1,12 @@
+// Set.jsx
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import '../styles/YourLibrary.css';
+import '../styles/Set.css';
 
-export default function YourLibrary() {
+
+export default function Set() {
+    const navigate = useNavigate();
     const [flashcardSets, setFlashcardSets] = useState([]);
 
     useEffect(() => {
@@ -11,13 +15,20 @@ export default function YourLibrary() {
             .catch(err => console.error(err));
     }, []);
 
+    const handleSetClick = (id) => {
+        navigate(`/createflashcard/${id}`) 
+    }
+
     return (
         <div className="your-library">
             <h1>Your Library</h1>
             <div className="flashcard-grid">
                 {flashcardSets.length === 0 ? <p>No sets available</p> : 
                     flashcardSets.map((set) => (
-                        <div key={set._id} className="flashcard-set">
+                        <div key={set._id} className="flashcard-set" 
+                        onClick={() => handleSetClick(set._id)}
+                        style={{cursor: 'pointer'}}
+                        >
                             <h2>{set.title}</h2>
                             <p>Type: {set.type}</p>
                             <p>{set.flashcards.length} flashcards</p>
