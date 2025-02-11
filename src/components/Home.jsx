@@ -13,7 +13,7 @@ export default function Home() {
         <h2>Welcome!</h2>
       </div>
       <div className='button-container'>
-        <button className="btn btn-outline-warning btn-lg create-flashcard" onClick={()=>navigate('./flashcards')}><FontAwesomeIcon icon={faPlus} /> </button>
+        <button className="btn btn-outline-warning btn-lg create-flashcard" onClick={()=>navigate('/flashcards')}><FontAwesomeIcon icon={faPlus} /> </button>
       </div>
       <div className='recents'>
         <h2>Recents</h2>

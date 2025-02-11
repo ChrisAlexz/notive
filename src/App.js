@@ -1,9 +1,8 @@
 // App.js
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
+
 import Home from "./components/Home";
 import About from "./components/About";
 import Navbar from "./components/Navbar";
@@ -15,24 +14,27 @@ function App() {
     <div className="app-container">
       <Navbar />
       <Routes>
+        {/* Home page at "/" */}
         <Route path="/" element={<Home />} />
+
+        {/* About page at "/About" */}
         <Route path="/About" element={<About />} />
-        
+
         {/* 
-          "/Set" (capital S) will display all sets in the library
-          from your Set.jsx component
+          "/Set" => see all sets you created 
+          (from Set.jsx).
         */}
         <Route path="/Set" element={<Set />} />
 
         {/* 
-          "/flashcards" (no :id) => create a brand new set
-          (Or continue editing if you didn’t finish creation.)
+          "/flashcards" => create a NEW set 
+          (or continue creation if not saved).
         */}
         <Route path="/flashcards" element={<Flashcard />} />
 
         {/* 
-          "/flashcards/:id" => edit an EXISTING set 
-          (Load that set by its _id and display in edit mode.)
+          "/flashcards/:id" => edit/view an EXISTING set 
+          (Load that set from DB).
         */}
         <Route path="/flashcards/:id" element={<Flashcard />} />
       </Routes>

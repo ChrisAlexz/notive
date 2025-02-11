@@ -1,5 +1,4 @@
-
-// FlashcardSet.js
+// models/FlashcardSet.js
 const mongoose = require('mongoose');
 
 const FlashcardSchema = new mongoose.Schema({
@@ -7,9 +6,9 @@ const FlashcardSchema = new mongoose.Schema({
     type: String, 
     required: true 
   },
-  type: { 
+  type: {
     type: String, 
-    required: false  // Make it optional if you want
+    required: false 
   },
   flashcards: [
     {
