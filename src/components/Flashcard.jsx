@@ -86,11 +86,12 @@ export default function Flashcard() {
 
   // Delete a single card from local state and DB
   const handleDelete = async (index) => {
+    // Remove from local state
     const newArr = flashcards.filter((_, i) => i !== index);
     setFlashcards(newArr);
-
-    if (!setId) return; // if no set yet, skip DB delete
-
+  
+    if (!setId) return; // If no set in DB yet, skip DB delete
+  
     try {
       const res = await fetch(
         `http://localhost:5000/flashcards/${setId}/card/${index}`,
@@ -103,6 +104,7 @@ export default function Flashcard() {
       console.error(err);
     }
   };
+  
 
   // Disable input fields if no title has been entered
   const inputsDisabled = !title.trim();

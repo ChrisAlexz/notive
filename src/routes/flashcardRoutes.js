@@ -1,4 +1,3 @@
-// routes/flashcardRoutes.js
 const express = require('express');
 const router = express.Router();
 const FlashcardSet = require('../models/FlashcardSet');
@@ -8,12 +7,10 @@ router.post('/', async (req, res) => {
   try {
     const { title, flashcards } = req.body;
 
-    // Must have a title
     if (!title) {
       return res.status(400).json({ error: 'Title is required' });
     }
 
-    // Must have at least one flashcard
     if (!flashcards || flashcards.length === 0) {
       return res.status(400).json({ error: 'Must have at least one flashcard' });
     }
@@ -82,13 +79,21 @@ router.delete('/:id/card/:cardIndex', async (req, res) => {
   try {
     const { id, cardIndex } = req.params;
     const set = await FlashcardSet.findById(id);
+
     if (!set) {
       return res.status(404).json({ error: 'Flashcard set not found' });
     }
-    // Remove the card at 'cardIndex'
-    set.flashcards.splice(cardIndex, 1);
+
+    const index = parseInt(cardIndex, 10);
+    if (isNaN(index) || index < 0 || index >= set.flashcards.length) {
+      return res.status(400).json({ error: 'Invalid flashcard index' });
+    }
+
+    // Remove the card at the given index
+    set.flashcards.splice(index, 1);
     await set.save();
-    return res.json({ message: 'Flashcard removed from the set' });
+
+    return res.json({ message: 'Flashcard removed from the set', updatedSet: set });
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
