@@ -91,7 +91,8 @@
   outline: none;
 }
 
-/* 🎯 Buttons */
+/* Old global button styling—comment out or remove if it's no longer needed */
+/*
 button {
   background-color: #297ef5;
   color: white;
@@ -102,12 +103,13 @@ button {
   cursor: pointer;
   transition: all 0.3s ease;
   width: 95%;
-  margin-top: 15px; /* More spacing */
+  margin-top: 15px;
 }
 button:hover {
   background-color: white;
   color: #297ef5;
 }
+*/
 
 /* ✅ Success Popup */
 .success-popup {

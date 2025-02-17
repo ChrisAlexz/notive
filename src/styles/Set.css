@@ -1,4 +1,4 @@
-/* General Page Styling */
+/* Set.css */
 .your-library {
   max-width: 900px;
   margin: 40px auto;
@@ -46,7 +46,7 @@
 }
 
 /* Delete Button */
-.delete {
+.del-set {
   position: absolute;
   top: 15px;
   right: 15px;
@@ -60,7 +60,7 @@
   transition: background 0.3s ease-in-out;
 }
 
-.delete:hover {
+.del-set:hover {
   background: #cc0000;
   transform: scale(1.1);
 }

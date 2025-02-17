@@ -48,17 +48,36 @@
     background-color: #2e3856; /* Matches flashcard background */
     color: white; /* Ensures text is visible */
 }
-.index-num {
-    display: inline-block; /* or block, if you want it to take up the full width */
-    border-bottom: 1px solid black;
-    padding-bottom: 4px;  /* optional: adds space between the text and the line */
-    margin-bottom: 8px;   /* optional: adds space below the line */
-    width: 100%;
-}
-.delete {
-    width: 50px;
-    display: inline-block;
-    margin-left:93%;
-    margin-bottom: 5px;
 
-}
+.flashcard-top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* This creates a full-width underline */
+    border-bottom: 1px solid black;
+    margin-bottom: 8px;
+    padding-bottom: 4px;
+  }
+  
+  .index-num {
+    /* Just the text now */
+    padding-bottom: 0; 
+    margin-bottom: 0;
+    border-bottom: none;
+  }
+  
+  .delete-btn {
+    width: auto !important;      /* Override any global button width */
+    margin: 0 !important;
+    padding: 4px 6px !important;
+    font-size: 14px !important;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+  }
+  .delete-btn:hover
+  {
+    background: #cc0000;
+    transform: scale(1.1);
+  }

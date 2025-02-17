@@ -59,7 +59,7 @@ export default function Set() {
               <p>Type: {set.type}</p>
               <p>{set.flashcards.length} flashcards</p>
               <button
-                className="delete"
+                className="del-set"
                 onClick={(e) => handleDeleteSet(set._id, e)}
               >
                 <FontAwesomeIcon icon={faTrash} />
