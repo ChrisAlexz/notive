@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import FlashcardTitle from "./FlashcardTitle";
 import FlashcardType from "./FlashcardType";
+import FlashcardStudy from "./FlashcardStudy"
 import FlashcardInput from "./FlashcardInput";
 import FlashcardList from "./FlashcardList";
 import SuccessPopup from "./SuccessPopup";
@@ -119,6 +120,7 @@ export default function Flashcard() {
         <div className="flashcard-header-row">
           <FlashcardTitle title={title} setTitle={setTitle} />
           <FlashcardType type={type} setType={setType} disabled={inputsDisabled} />
+          
         </div>
 
         <FlashcardInput addFlashcard={addFlashcard} disabled={inputsDisabled} />

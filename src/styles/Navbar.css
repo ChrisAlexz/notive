@@ -4,11 +4,12 @@
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  background: #0c0b0b;
+  justify-content: center;
+  background: rgba(17, 17, 17, 1); /* Matches the logo background */
   height: 80px;
   padding: 15px 7%;
-  /* Remove height: 100px; */
+  position: relative;
+  overflow: hidden;
 }
 ul {
     color: white;
@@ -32,16 +33,21 @@ ul li {
     transition: color 0.3s ease; /* Smooth color transition on hover */
 }
 .logo {
-  max-height: 60px; /* try reducing from 100px */
-  max-width: 160px;
+  max-height: 110px; /* Increased from 80px */
+  max-width: 240px; /* Increased from 200px */
   object-fit: contain;
   cursor: pointer;
+  position: absolute;
+  left: 7%;
+  top: 50%;
+  transform: translateY(-50%);
 }
+
   .create-account {
     position: relative;
     display: flex;
     align-items: center;
-    background-color: #0c0b0b;
+    background-color: rgba(17, 17, 17, 1);
     padding: 10px 20px;
     border-radius: 50px;
     cursor: pointer;
@@ -50,22 +56,22 @@ ul li {
   }
 
   .profile-pic {
-    width: 40px; /* Adjust the size of the profile pic */
+    width: 40px;
     height: 40px;
-    border-radius: 50%; /* Makes the image circular */
-    object-fit: cover; /* Ensures the image scales properly */
-    background-color: #d3d3d3; /* Optional: light gray background */
-    border: 2px solid #fff; /* Optional: white border */
-    cursor: pointer; /* Makes it clickable */
-    
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: rgba(17, 17, 17, 1); /* Matches navbar */
+    border: 2px solid #fff; /* Keeps the white border */
+    cursor: pointer;
   }
+  
 
 /* Improved Dropdown Styles */
 .custom-dropdown-menu  {
   border: 1px solid #404040; /* Darker border to match navbar */
   border-radius: 8px; /* Slightly larger radius */
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Deeper shadow */
-  background: #1a1a1a; /* Dark background matching navbar */
+  background: rgba(17, 17, 17, 1); /* Dark background matching navbar */
   padding: 8px 0; /* Better padding */
   min-width: 200px; /* Wider for better spacing */
   position: absolute;

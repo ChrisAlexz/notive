@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope, faFolderOpen, faCircleInfo, faHouse, faBolt } from '@fortawesome/free-solid-svg-icons'
 import '../styles/Navbar.css';
 import { Link } from 'react-router-dom'; // Import Link
-import logo from '../assets/notive.png';
+import logo from '../assets/214661508.png';
 import DropdownMenu from './DropdownMenu';
 
 const Navbar = () => {
