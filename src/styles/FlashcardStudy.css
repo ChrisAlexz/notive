@@ -1,0 +1,21 @@
+/* FlashcardStudy.css */
+.study-button {
+    background-color: #df0f08 !important;
+    color: white !important;
+    border-color: #ffc107 !important; 
+    transition: all 0.3s ease-in-out;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    display: inline-block;
+    text-align: center;
+}
+
+.study-button:hover {
+    background-color: #ff3b30 !important; /* Slightly brighter red */
+    transform: scale(1.05); /* Slight enlargement */
+    box-shadow: 0px 0px 15px rgba(255, 0, 0, 0.7); /* Red glow */
+    border-color: #ff4c4c !important; /* Brighter red border */
+    color: white !important; /* Ensures text remains white */
+}

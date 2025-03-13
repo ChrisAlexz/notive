@@ -1,9 +1,8 @@
-// Flashcard.jsx
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import FlashcardTitle from "./FlashcardTitle";
 import FlashcardType from "./FlashcardType";
-import FlashcardStudy from "./FlashcardStudy"
+import FlashcardStudy from "./FlashcardStudy";
 import FlashcardInput from "./FlashcardInput";
 import FlashcardList from "./FlashcardList";
 import SuccessPopup from "./SuccessPopup";
@@ -12,6 +11,7 @@ import "../styles/Flashcard.css";
 
 export default function Flashcard() {
   const navigate = useNavigate();
+  const { id } = useParams(); // Get flashcard set ID from URL
 
   const [title, setTitle] = useState("");
   const [type, setType] = useState("Basic");
@@ -19,10 +19,7 @@ export default function Flashcard() {
   const [showSuccess, setShowSuccess] = useState(false);
   const [setId, setSetId] = useState(null);
 
-  // Check if we have an :id param
-  const { id } = useParams();
-
-  // If "id" exists, fetch the existing set from the DB for editing
+  // Fetch the existing set if "id" exists
   useEffect(() => {
     if (id) {
       axios
@@ -38,77 +35,53 @@ export default function Flashcard() {
     }
   }, [id]);
 
-  // Called when user clicks "Add Flashcard"
-  const addFlashcard = async (front, back) => {
-    if (front.trim() && back.trim()) {
-      // Add card locally
-      const newFlashcards = [...flashcards, { front, back }];
-      setFlashcards(newFlashcards);
+  // Add new flashcard
+  const addFlashcard = (front, back) => {
+    if (!front.trim() || !back.trim()) return;
 
-      // Show success popup briefly
-      setShowSuccess(true);
-      setTimeout(() => setShowSuccess(false), 1000);
+    const newFlashcard = { front, back };
+    setFlashcards(prevFlashcards => [...prevFlashcards, newFlashcard]);
 
-      try {
-        if (!setId) {
-          // We don't have a set in DB yet => POST (create)
-          const response = await axios.post("http://localhost:5000/flashcards", {
-            title,
-            type,
-            flashcards: newFlashcards,
-          });
+    setShowSuccess(true);
+    setTimeout(() => setShowSuccess(false), 1000);
 
-          // Save the DB-generated _id
-          setSetId(response.data.newSet._id);
-        } else {
-          // Already have a set => PUT (update)
-          await axios.put(`http://localhost:5000/flashcards/${setId}`, {
-            title,
-            type,
-            flashcards: newFlashcards,
-          });
-        }
-      } catch (error) {
-        console.error("Error saving flashcard set:", error);
-      }
+    if (setId) {
+      axios.put(`http://localhost:5000/flashcards/${setId}`, {
+        title,
+        type,
+        flashcards: [...flashcards, newFlashcard], // Append new card
+      }).catch(error => console.error("Error updating flashcard set:", error));
     }
   };
 
-  // Update a flashcard in local state
+  // Update existing flashcard
   const updateFlashcard = (index, updatedCard) => {
-    const newFlashcards = flashcards.map((card, idx) => {
-      if (idx === index) {
-        return { ...card, ...updatedCard };
-      }
-      return card;
-    });
-    setFlashcards(newFlashcards);
-  };
+    setFlashcards(prevFlashcards =>
+      prevFlashcards.map((card, i) => (i === index ? { ...card, ...updatedCard } : card))
+    );
 
-  // Delete a single card from local state and DB
-  const handleDelete = async (index) => {
-    // Remove from local state
-    const newArr = flashcards.filter((_, i) => i !== index);
-    setFlashcards(newArr);
-  
-    if (!setId) return; // If no set in DB yet, skip DB delete
-  
-    try {
-      const res = await fetch(
-        `http://localhost:5000/flashcards/${setId}/card/${index}`,
-        { method: "DELETE" }
-      );
-      if (!res.ok) {
-        throw new Error("Could not delete the card in the DB");
-      }
-    } catch (err) {
-      console.error(err);
+    if (setId) {
+      axios.put(`http://localhost:5000/flashcards/${setId}`, {
+        title,
+        type,
+        flashcards: flashcards.map((card, i) => (i === index ? { ...card, ...updatedCard } : card)),
+      }).catch(error => console.error("Error updating flashcard:", error));
     }
   };
-  
 
-  // Disable input fields if no title has been entered
-  const inputsDisabled = !title.trim();
+  // Delete flashcard
+  const handleDelete = (index) => {
+    const updatedFlashcards = flashcards.filter((_, i) => i !== index);
+    setFlashcards(updatedFlashcards);
+
+    if (setId) {
+      axios.put(`http://localhost:5000/flashcards/${setId}`, {
+        title,
+        type,
+        flashcards: updatedFlashcards,
+      }).catch(error => console.error("Error deleting flashcard:", error));
+    }
+  };
 
   return (
     <div className="flashcard-page">
@@ -119,22 +92,15 @@ export default function Flashcard() {
 
         <div className="flashcard-header-row">
           <FlashcardTitle title={title} setTitle={setTitle} />
-          <FlashcardType type={type} setType={setType} disabled={inputsDisabled} />
-          
+          <FlashcardType type={type} setType={setType} disabled={!title.trim()} />
+          {setId && <button className="study-button" onClick={() => navigate(`/study/${setId}`)}>Study</button>}
         </div>
 
-        <FlashcardInput addFlashcard={addFlashcard} disabled={inputsDisabled} />
+        <FlashcardInput addFlashcard={addFlashcard} disabled={!title.trim()} />
         {showSuccess && <SuccessPopup />}
       </div>
 
-      <div>
-        <FlashcardList
-          multiline={false}
-          flashcards={flashcards}
-          updateFlashcard={updateFlashcard}
-          onDelete={handleDelete}
-        />
-      </div>
+      <FlashcardList flashcards={flashcards} updateFlashcard={updateFlashcard} onDelete={handleDelete} />
     </div>
   );
 }

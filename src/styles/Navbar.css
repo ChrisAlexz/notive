@@ -1,16 +1,22 @@
 /* Navbar.css */
 
 .navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
+  height: 80px;
+  background: rgba(17, 17, 17, 1);
+  z-index: 1000;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(17, 17, 17, 1); /* Matches the logo background */
-  height: 80px;
   padding: 15px 7%;
-  position: relative;
-  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  overflow: hidden; /* Prevents logo from overflowing */
 }
+
+
 ul {
     color: white;
     flex: 1;

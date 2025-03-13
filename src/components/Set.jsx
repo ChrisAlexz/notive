@@ -12,19 +12,27 @@ export default function Set() {
   // Fetch all sets from backend
   useEffect(() => {
     fetchFlashcardSets();
-  }, []);
+
+    // Listen for refresh event
+    const handleRefresh = () => fetchFlashcardSets();
+    window.addEventListener("refreshSets", handleRefresh);
+
+    return () => {
+        window.removeEventListener("refreshSets", handleRefresh);
+    };
+}, []);
 
   const fetchFlashcardSets = async () => {
     try {
       const res = await axios.get("http://localhost:5000/flashcards");
       setFlashcardSets(res.data);
+      console.log("Updated flashcard sets:", res.data);
     } catch (err) {
       console.error("Error fetching flashcard sets:", err);
     }
   };
 
   const handleSetClick = (id) => {
-    // Go to "edit mode" at "/flashcards/:id"
     navigate(`/flashcards/${id}`);
   };
 
@@ -33,8 +41,7 @@ export default function Set() {
     try {
       const res = await axios.delete(`http://localhost:5000/flashcards/${setId}`);
       if (res.status === 200) {
-        // Remove the deleted set from local state
-        setFlashcardSets(flashcardSets.filter(set => set._id !== setId));
+        setFlashcardSets(prevSets => prevSets.filter(set => set._id !== setId));
       }
     } catch (error) {
       console.error("Error deleting flashcard set:", error);

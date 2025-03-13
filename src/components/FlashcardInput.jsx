@@ -6,10 +6,16 @@ export default function FlashcardInput({ addFlashcard, disabled }) {
     const [back, setBack] = useState('');
 
     const handleAdd = () => {
+        if (!front.trim() || !back.trim()) {
+            console.error("Cannot add flashcard. Front or back is empty.");
+            return;
+        }
+    
+        console.log("Adding flashcard with front:", front, "and back:", back);
         addFlashcard(front, back);
         setFront('');
         setBack('');
-    };
+    }
     function autoResizeTextarea(e) {
         const textarea = e.target;
         textarea.style.height = 'auto'; 

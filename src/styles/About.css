@@ -1,4 +1,4 @@
-/* ABOUT CONTAINER: Centers everything and sets a max width */
+/* About.css */
 .about-container {
     max-width: 800px;        /* or any width you prefer */
     margin: 0 auto;          /* centers the container on the page */

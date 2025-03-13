@@ -1,0 +1,102 @@
+/* FlashcardStudyPage.css.css */
+.study-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Aligns the box at the top with spacing */
+    min-height: 100vh;
+    width: 100%;
+    padding-top: 50px; /* Adds space between the navbar and the white box */
+}
+
+
+.flashcard-study-box {
+    background: white;
+    padding: 60px;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    width: 800px;
+    max-width: 90%;
+    min-height: 500px; /* Minimum height but allows growth */
+    text-align: center;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Pushes content apart */
+}
+
+
+/* Front & Back of Flashcard */
+.flashcard-front, .flashcard-back {
+    padding: 30px;
+    border-radius: 10px;
+    font-size: 2rem; /* Bigger text */
+    font-weight: bold;
+    color: black;
+    background-color: white;
+    margin-bottom: 25px;
+}
+.flashcard-back {
+    padding: 30px;
+    border-top: 3px solid #000; /* Only top border */
+    font-size: 2rem;
+    font-weight: bold;
+    color: black;
+    background-color: white;
+    margin-top: 40px; /* Adds space between answer and buttons */
+    word-wrap: break-word; /* Ensures text doesn't overflow */
+    overflow-wrap: break-word;
+    max-width: 100%; /* Prevents overflow */
+}
+
+
+
+
+/* Show Answer Button */
+.show-answer-btn {
+    margin-top: 30%; /* Move button down */
+    padding: 15px 20px;
+    background: black;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: background 0.3s;
+}
+
+.show-answer-btn:hover {
+    background: #333;
+}
+
+/* Difficulty Buttons */
+.difficulty-buttons {
+    margin-top: 40px; /* Adds space */
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
+/* Ensure buttons have proper padding and spacing */
+.difficulty-buttons button {
+    padding: 15px 25px; /* Larger padding for better button size */
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    font-weight: bold;
+    transition: 0.3s;
+    color: white;
+    flex: 1; /* Makes sure buttons stretch evenly */
+    margin: 0 10px; /* Adds space between buttons */
+}
+
+/* Button colors */
+.again-btn { background: #d9534f; }
+.hard-btn { background: #f0ad4e; }
+.good-btn { background: #5bc0de; }
+.easy-btn { background: #5cb85c; }
+
+.again-btn:hover { background: #c9302c; }
+.hard-btn:hover { background: #ec971f; }
+.good-btn:hover { background: #31b0d5; }
+.easy-btn:hover { background: #449d44; }

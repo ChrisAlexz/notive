@@ -11,3 +11,6 @@
   min-height: 100vh;
   background: #171718;
 }
+.page-content {
+  padding-top: 100px; /* Creates space below navbar */
+}
