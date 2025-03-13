@@ -36,23 +36,39 @@ export default function Flashcard() {
   }, [id]);
 
   // Add new flashcard
-  const addFlashcard = (front, back) => {
-    if (!front.trim() || !back.trim()) return;
+// Add new flashcard
+const addFlashcard = async (front, back) => {
+  if (!front.trim() || !back.trim()) return;
 
-    const newFlashcard = { front, back };
-    setFlashcards(prevFlashcards => [...prevFlashcards, newFlashcard]);
+  const newFlashcard = { front, back };
+  const updatedFlashcards = [...flashcards, newFlashcard];
 
-    setShowSuccess(true);
-    setTimeout(() => setShowSuccess(false), 1000);
+  setFlashcards(updatedFlashcards);
+  setShowSuccess(true);
+  setTimeout(() => setShowSuccess(false), 1000);
 
+  try {
     if (setId) {
-      axios.put(`http://localhost:5000/flashcards/${setId}`, {
+      // Update existing set
+      await axios.put(`http://localhost:5000/flashcards/${setId}`, {
         title,
         type,
-        flashcards: [...flashcards, newFlashcard], // Append new card
-      }).catch(error => console.error("Error updating flashcard set:", error));
+        flashcards: updatedFlashcards,
+      });
+    } else {
+      // Create a new set
+      const res = await axios.post(`http://localhost:5000/flashcards`, {
+        title,
+        type,
+        flashcards: updatedFlashcards,
+      });
+      setSetId(res.data.newSet._id); // Save the new set's ID
     }
-  };
+  } catch (error) {
+    console.error("Error saving flashcard set:", error);
+  }
+};
+
 
   // Update existing flashcard
   const updateFlashcard = (index, updatedCard) => {

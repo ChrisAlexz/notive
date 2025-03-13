@@ -2,10 +2,10 @@ const express = require('express');
 const router = express.Router();
 const FlashcardSet = require('../models/FlashcardSet');
 
-// CREATE a new flashcard set
+// ✅ CREATE a new flashcard set
 router.post('/', async (req, res) => {
   try {
-    const { title, flashcards } = req.body;
+    const { title, flashcards, type } = req.body;
 
     if (!title) {
       return res.status(400).json({ error: 'Title is required' });
@@ -15,7 +15,13 @@ router.post('/', async (req, res) => {
       return res.status(400).json({ error: 'Must have at least one flashcard' });
     }
 
-    const newSet = new FlashcardSet(req.body);
+    const newSet = new FlashcardSet({
+      title,
+      type,
+      flashcards,
+      createdAt: new Date() // Ensure the createdAt field is set
+    });
+
     await newSet.save();
     return res.status(201).json({ message: 'Flashcard set saved successfully!', newSet });
   } catch (error) {
@@ -23,18 +29,28 @@ router.post('/', async (req, res) => {
   }
 });
 
-// GET all flashcard sets
-router.get('/', async (req, res) => {
+// ✅ GET the 3 most recent flashcard sets (for homepage)
+router.get('/flashcards', async (req, res) => {
   try {
-    const sets = await FlashcardSet.find();
+    const recentSets = await FlashcardSet.find().sort({ createdAt: -1 }).limit(3);
+    return res.json(recentSets);
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+});
+
+// ✅ GET all flashcard sets (for /sets page)
+router.get('/flashcards/all', async (req, res) => {
+  try {
+    const sets = await FlashcardSet.find().sort({ createdAt: -1 });
     return res.json(sets);
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
 });
 
-// GET a single flashcard set by ID
-router.get('/:id', async (req, res) => {
+// ✅ GET a single flashcard set by ID
+router.get('/flashcards/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const set = await FlashcardSet.findById(id);
@@ -47,8 +63,8 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// UPDATE an existing flashcard set by ID
-router.put('/:id', async (req, res) => {
+// ✅ UPDATE an existing flashcard set by ID
+router.put('/flashcards/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const updatedSet = await FlashcardSet.findByIdAndUpdate(id, req.body, { new: true });
@@ -64,18 +80,21 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-// DELETE an entire flashcard set
-router.delete('/:id', async (req, res) => {
+// ✅ DELETE an entire flashcard set
+router.delete('/flashcards/:id', async (req, res) => {
   try {
-    await FlashcardSet.findByIdAndDelete(req.params.id);
+    const deletedSet = await FlashcardSet.findByIdAndDelete(req.params.id);
+    if (!deletedSet) {
+      return res.status(404).json({ error: 'Flashcard set not found' });
+    }
     return res.json({ message: 'Flashcard set deleted!' });
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
 });
 
-// DELETE a single flashcard from a set by array index
-router.delete('/:id/card/:cardIndex', async (req, res) => {
+// ✅ DELETE a single flashcard from a set by array index
+router.delete('/flashcards/:id/card/:cardIndex', async (req, res) => {
   try {
     const { id, cardIndex } = req.params;
     const set = await FlashcardSet.findById(id);

@@ -1,52 +1,119 @@
-
-/* Home.css*/
-.home-container {
+/* 🏠 Dashboard */
+.dashboard {
   display: flex;
-  flex-direction: column; /* Stack elements vertically */
-  align-items: center; /* Centers elements horizontally */
-  height: 100vh; /* Full viewport height */
-  padding: 20px 50px; /* Adds padding */
-  margin-top: 30px;
-  position: relative;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding: 40px 20px;
+  background: #121212; /* Keeping your original background color */
 }
 
-.welcome-container {
-  position: absolute;
-  top: 20px; /* Positions it at the top */
-  left: 50%;
-  transform: translateX(-50%); /* Ensures it's perfectly centered */
+/* 👋 Welcome Section */
+.intro-section {
   text-align: center;
-  color: white;
-  
+  margin-bottom: 30px;
 }
 
-.button-container {
-  position: absolute;
-  top: 20px; /* Keeps it aligned with "Welcome!" */
-  right: 129px; /* Adds spacing from the right */
-  
-}
-.recents {
-  position: absolute;
-  top: 120px; /* Positions it below "Welcome!" */
-  left: 50px; /* Aligns it to the left */
+.intro-section h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
   color: white;
 }
-.create-flashcard {
-  background-color: #ffc107 !important; /* Already set, just showing for clarity */
-  border-color: #ffc107 !important;    /* Already set */
-  color: black !important;            /* Already set */
 
-  /* Added styles */
-  width: 70px;              /* Set a fixed width */
-  height: 70px;             /* Set a fixed height */
-  border-radius: 50%;       /* Makes the button circular */
-  display: flex;            /* Flex to center the icon */
-  align-items: center;      /* Center vertically */
-  justify-content: center;  /* Center horizontally */
-  font-size: 24px;          /* Increase icon size */
-  padding: 0;               /* Remove default padding */
+.intro-section p {
+  font-size: 1.2rem;
+  color: #ccc;
 }
-.create-flashcard:hover {
-  background-color: #ffca2c !important; /* Slightly darker yellow on hover */
+
+/* ➕ Create Flashcard Button */
+.new-set-button {
+  background-color: #ffc107;
+  color: black;
+  border: none;
+  padding: 14px 22px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.new-set-button:hover {
+  background-color: #ffca2c;
+}
+
+/* 🔄 Recent Flashcard Sets Section */
+.recents-section {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.recents-section h2 {
+  font-size: 2rem;
+  color: white;
+  margin-bottom: 15px;
+}
+
+/* 📌 Grid for recent sets */
+.recents-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  width: 100%;
+  max-width: 900px;
+  padding: 20px;
+}
+
+/* 📝 Individual Flashcard Set */
+.flashcard-preview {
+  background: #1e1e1e;
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid #333;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  transition: 0.3s ease-in-out;
+  cursor: pointer;
+  text-align: left;
+}
+
+.flashcard-preview:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 6px 15px rgba(255, 255, 255, 0.15);
+}
+
+.flashcard-preview h2 {
+  font-size: 1.4rem;
+  margin-bottom: 8px;
+  color: white;
+}
+
+.flashcard-preview p {
+  font-size: 1rem;
+  color: #bbb;
+}
+
+/* 🛑 Message when no sets exist */
+.empty-message {
+  font-size: 1.2rem;
+  color: #aaa;
+  margin-top: 20px;
+}
+
+/* 📱 Responsive Design */
+@media (max-width: 600px) {
+  .recent-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+
+  .flashcard-preview {
+    padding: 15px;
+  }
+
+  .intro-section h1 {
+    font-size: 2rem;
+  }
+
+  .intro-section p {
+    font-size: 1rem;
+  }
 }
