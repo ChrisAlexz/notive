@@ -30,7 +30,7 @@ router.post('/', async (req, res) => {
 });
 
 // ✅ GET the 3 most recent flashcard sets (for homepage)
-router.get('/flashcards', async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const recentSets = await FlashcardSet.find().sort({ createdAt: -1 }).limit(3);
     return res.json(recentSets);
@@ -40,7 +40,7 @@ router.get('/flashcards', async (req, res) => {
 });
 
 // ✅ GET all flashcard sets (for /sets page)
-router.get('/flashcards/all', async (req, res) => {
+router.get('/all', async (req, res) => {
   try {
     const sets = await FlashcardSet.find().sort({ createdAt: -1 });
     return res.json(sets);
@@ -50,7 +50,7 @@ router.get('/flashcards/all', async (req, res) => {
 });
 
 // ✅ GET a single flashcard set by ID
-router.get('/flashcards/:id', async (req, res) => {
+router.get('/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const set = await FlashcardSet.findById(id);
@@ -64,7 +64,7 @@ router.get('/flashcards/:id', async (req, res) => {
 });
 
 // ✅ UPDATE an existing flashcard set by ID
-router.put('/flashcards/:id', async (req, res) => {
+router.put('/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const updatedSet = await FlashcardSet.findByIdAndUpdate(id, req.body, { new: true });
@@ -81,7 +81,7 @@ router.put('/flashcards/:id', async (req, res) => {
 });
 
 // ✅ DELETE an entire flashcard set
-router.delete('/flashcards/:id', async (req, res) => {
+router.delete('/:id', async (req, res) => {
   try {
     const deletedSet = await FlashcardSet.findByIdAndDelete(req.params.id);
     if (!deletedSet) {
@@ -94,7 +94,7 @@ router.delete('/flashcards/:id', async (req, res) => {
 });
 
 // ✅ DELETE a single flashcard from a set by array index
-router.delete('/flashcards/:id/card/:cardIndex', async (req, res) => {
+router.delete('/:id/card/:cardIndex', async (req, res) => {
   try {
     const { id, cardIndex } = req.params;
     const set = await FlashcardSet.findById(id);
