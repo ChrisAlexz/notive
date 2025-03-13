@@ -121,3 +121,18 @@ ul li {
 .dropdown-menu li:not(:last-child) {
   border-bottom: 1px solid #333;
 }
+/* Add to existing Navbar styles */
+.signup-button {
+  background: #4CAF50;
+  color: white;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s ease;
+}
+
+.signup-button:hover {
+  background: #45a049;
+}

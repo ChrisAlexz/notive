@@ -8,72 +8,70 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
 export default function Set() {
   const navigate = useNavigate();
   const [flashcardSets, setFlashcardSets] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Fetch all sets from backend
   useEffect(() => {
     fetchFlashcardSets();
-
-    // Listen for refresh event
     const handleRefresh = () => fetchFlashcardSets();
     window.addEventListener("refreshSets", handleRefresh);
-
-    return () => {
-        window.removeEventListener("refreshSets", handleRefresh);
-    };
-}, []);
+    return () => window.removeEventListener("refreshSets", handleRefresh);
+  }, []);
 
   const fetchFlashcardSets = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/flashcards");
+      setLoading(true);
+      setError(null);
+      const res = await axios.get("http://localhost:5000/flashcards/all");
       setFlashcardSets(res.data);
-      console.log("Updated flashcard sets:", res.data);
     } catch (err) {
+      setError("Failed to load sets. Please try again later.");
       console.error("Error fetching flashcard sets:", err);
+    } finally {
+      setLoading(false);
     }
-  };
-
-  const handleSetClick = (id) => {
-    navigate(`/flashcards/${id}`);
   };
 
   const handleDeleteSet = async (setId, e) => {
     e.stopPropagation();
     try {
-      const res = await axios.delete(`http://localhost:5000/flashcards/${setId}`); // Added backticks
-      if (res.status === 200) {
-        setFlashcardSets(prevSets => prevSets.filter(set => set._id !== setId));
-      }
-    } catch (error) {
-      console.error("Error deleting flashcard set:", error);
+      await axios.delete(`http://localhost:5000/flashcards/${setId}`);
+      setFlashcardSets(prev => prev.filter(set => set._id !== setId));
+    } catch (err) {
+      console.error("Delete error:", err);
+      setError("Failed to delete set. Please try again.");
     }
   };
 
   return (
     <div className="your-library">
       <h1>Your Sets</h1>
+      {loading && <p>Loading sets...</p>}
+      {error && <div className="error-message">{error}</div>}
+      
       <div className="flashcard-grid">
-        {flashcardSets.length === 0 ? (
-          <p>No sets available</p>
-        ) : (
-          flashcardSets.map((set) => (
-            <div
-              key={set._id}
-              className="flashcard-set"
-              onClick={() => handleSetClick(set._id)}
-              style={{ cursor: "pointer" }}
-            >
-              <h2>{set.title}</h2>
-              <p>Type: {set.type}</p>
-              <p>{set.flashcards.length} flashcards</p>
-              <button
-                className="del-set"
-                onClick={(e) => handleDeleteSet(set._id, e)}
-              >
-                <FontAwesomeIcon icon={faTrash} />
-              </button>
-            </div>
-          ))
+        {!loading && flashcardSets.length === 0 && (
+          <p>No sets available. Create your first set!</p>
         )}
+
+        {flashcardSets.map((set) => (
+          <div
+            key={set._id}
+            className="flashcard-set"
+            onClick={() => navigate(`/flashcards/${set._id}`)}
+          >
+            <h2>{set.title}</h2>
+            <p>Type: {set.type || 'Basic'}</p>
+            <p>{set.flashcards.length} flashcards</p>
+            <button
+              className="del-set"
+              onClick={(e) => handleDeleteSet(set._id, e)}
+              aria-label="Delete set"
+            >
+              <FontAwesomeIcon icon={faTrash} />
+            </button>
+          </div>
+        ))}
       </div>
     </div>
   );
