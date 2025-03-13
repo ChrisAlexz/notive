@@ -37,9 +37,9 @@ export default function Set() {
   };
 
   const handleDeleteSet = async (setId, e) => {
-    e.stopPropagation(); // Prevent click from navigating to the set
+    e.stopPropagation();
     try {
-      const res = await axios.delete(`http://localhost:5000/flashcards/${setId}`);
+      const res = await axios.delete(`http://localhost:5000/flashcards/${setId}`); // Added backticks
       if (res.status === 200) {
         setFlashcardSets(prevSets => prevSets.filter(set => set._id !== setId));
       }
