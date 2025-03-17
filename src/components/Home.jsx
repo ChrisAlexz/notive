@@ -1,21 +1,27 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { supabase } from '../supabase';
 import '../styles/Home.css';
 
 export default function Home() {
   const navigate = useNavigate();
   const [recentSets, setRecentSets] = useState([]);
 
-  // Fetch recent flashcard sets
+  // Fetch recent flashcard sets (limit 3)
   useEffect(() => {
-    axios.get('http://localhost:5000/flashcards')
-      .then((res) => {
-        if (Array.isArray(res.data) && res.data.length > 0) {
-          setRecentSets(res.data);
-        }
-      })
-      .catch((err) => console.error('Error fetching recent flashcards:', err));
+    const fetchRecents = async () => {
+      const { data, error } = await supabase
+        .from('flashcard_sets')
+        .select('*')
+        .order('created_at', { ascending: false })
+        .limit(3);
+      if (error) {
+        console.error('Error fetching recent flashcards:', error);
+      } else {
+        setRecentSets(data || []);
+      }
+    };
+    fetchRecents();
   }, []);
 
   return (
@@ -34,19 +40,19 @@ export default function Home() {
         </button>
       </div>
 
-      {/* Recent Flashcard Sets Section */}
       <div className="recents-section">
         <h2>Recent Flashcard Sets</h2>
         <div className="recents-grid">
           {recentSets.length > 0 ? (
             recentSets.map((set) => (
               <div 
-                key={set._id} 
+                key={set.id}
                 className="flashcard-preview"
-                onClick={() => navigate(`/flashcards/${set._id}`)}
+                onClick={() => navigate(`/flashcards/${set.id}`)}
               >
                 <h2>{set.title}</h2>
-                <p>{set.flashcards.length} flashcards</p>
+                {/* If you want to show how many cards are in the set,
+                    you can do a second query or join to flashcard_cards */}
               </div>
             ))
           ) : (

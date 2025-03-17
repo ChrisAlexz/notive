@@ -1,8 +1,8 @@
 import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthContext from './context/AuthContext';
-import axios from 'axios';
 import '../styles/Register.css';
+// import { supabase } from '../supabase'; // If you want to do Supabase Auth
 
 const Register = () => {
   const [email, setEmail] = useState('');
@@ -13,19 +13,23 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post('http://localhost:5000/auth/register', {
-        email,
-        password
-      });
-      
-      if (response.data.success) {
-        login(response.data.user);
-        navigate('/');
-      }
-    } catch (err) {
-      setError(err.response?.data?.message || 'Registration failed');
+    // Example: If you had Supabase auth:
+    /*
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password
+    });
+    if (error) {
+      setError(error.message);
+      return;
     }
+    // On success:
+    login(data.user);
+    navigate('/');
+    */
+    // For now, we’ll just “pretend” success:
+    login({ email });
+    navigate('/');
   };
 
   return (

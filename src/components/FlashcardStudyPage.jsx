@@ -1,22 +1,33 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
+// import axios from "axios";
+import { supabase } from "../supabase";
 import "../styles/FlashcardStudyPage.css";
 
 export default function FlashcardStudyPage() {
-  const { id } = useParams(); // Get flashcard set ID from URL
+  const { id } = useParams(); // ID of the flashcard set
   const [flashcards, setFlashcards] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showBack, setShowBack] = useState(false);
 
   useEffect(() => {
     if (id) {
-      axios
-        .get(`http://localhost:5000/flashcards/${id}`)
-        .then((res) => setFlashcards(res.data.flashcards))
-        .catch((err) => console.error("Error fetching flashcards:", err));
+      fetchFlashcards(id);
     }
   }, [id]);
+
+  const fetchFlashcards = async (setId) => {
+    // either fetch from flashcard_sets with a join, or directly from flashcard_cards
+    const { data, error } = await supabase
+      .from("flashcard_cards")
+      .select("*")
+      .eq("set_id", setId);
+    if (error) {
+      console.error("Error fetching flashcards:", error);
+      return;
+    }
+    setFlashcards(data || []);
+  };
 
   const handleShowAnswer = () => setShowBack(true);
 
@@ -25,7 +36,9 @@ export default function FlashcardStudyPage() {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % flashcards.length);
   };
 
-  if (flashcards.length === 0) return <p>Loading flashcards...</p>;
+  if (flashcards.length === 0) {
+    return <p>Loading flashcards...</p>;
+  }
 
   return (
     <div className="study-container">

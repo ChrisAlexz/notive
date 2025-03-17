@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { supabase } from '../supabase';
 import '../styles/Set.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
@@ -12,21 +12,25 @@ export default function Set() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetchFlashcardSets();
-    const handleRefresh = () => fetchFlashcardSets();
-    window.addEventListener("refreshSets", handleRefresh);
-    return () => window.removeEventListener("refreshSets", handleRefresh);
+    fetchAllSets();
   }, []);
 
-  const fetchFlashcardSets = async () => {
+  const fetchAllSets = async () => {
     try {
       setLoading(true);
       setError(null);
-      const res = await axios.get("http://localhost:5000/flashcards/all");
-      setFlashcardSets(res.data);
+
+      const { data, error } = await supabase
+        .from('flashcard_sets')
+        .select('*')
+        .order('created_at', { ascending: false });
+      if (error) {
+        throw error;
+      }
+      setFlashcardSets(data || []);
     } catch (err) {
-      setError("Failed to load sets. Please try again later.");
-      console.error("Error fetching flashcard sets:", err);
+      console.error('Error fetching flashcard sets:', err);
+      setError('Failed to load sets. Please try again later.');
     } finally {
       setLoading(false);
     }
@@ -35,11 +39,15 @@ export default function Set() {
   const handleDeleteSet = async (setId, e) => {
     e.stopPropagation();
     try {
-      await axios.delete(`http://localhost:5000/flashcards/${setId}`);
-      setFlashcardSets(prev => prev.filter(set => set._id !== setId));
+      const { error } = await supabase
+        .from('flashcard_sets')
+        .delete()
+        .eq('id', setId);
+      if (error) throw error;
+      setFlashcardSets(prev => prev.filter(s => s.id !== setId));
     } catch (err) {
-      console.error("Delete error:", err);
-      setError("Failed to delete set. Please try again.");
+      console.error('Delete error:', err);
+      setError('Failed to delete set. Please try again.');
     }
   };
 
@@ -48,24 +56,23 @@ export default function Set() {
       <h1>Your Sets</h1>
       {loading && <p>Loading sets...</p>}
       {error && <div className="error-message">{error}</div>}
-      
+
       <div className="flashcard-grid">
         {!loading && flashcardSets.length === 0 && (
           <p>No sets available. Create your first set!</p>
         )}
-
         {flashcardSets.map((set) => (
           <div
-            key={set._id}
+            key={set.id}
             className="flashcard-set"
-            onClick={() => navigate(`/flashcards/${set._id}`)}
+            onClick={() => navigate(`/flashcards/${set.id}`)}
           >
             <h2>{set.title}</h2>
             <p>Type: {set.type || 'Basic'}</p>
-            <p>{set.flashcards.length} flashcards</p>
+            {/* If you need the # of cards, do a related query or store them in state */}
             <button
               className="del-set"
-              onClick={(e) => handleDeleteSet(set._id, e)}
+              onClick={(e) => handleDeleteSet(set.id, e)}
               aria-label="Delete set"
             >
               <FontAwesomeIcon icon={faTrash} />

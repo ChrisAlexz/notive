@@ -1,11 +1,11 @@
 /* index.css */
-* {
+html, body {
+  background: #171718;   /* Same color as .app-container */
+  min-height: 100vh;     /* Ensures full screen coverage */
   margin: 0;
-  padding: 0; 
-  box-sizing: border-box;
-  font-family: sans-serif;
-  font-family: "Roboto", serif;
+  padding: 0;
 }
+
 .app-container {
   width: 100vw;
   min-height: 100vh;

@@ -1,36 +1,16 @@
-import React, { useState } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
 import "bootstrap/dist/css/bootstrap.min.css";
+
+import Home from './components/Home';
+import About from './components/About';
+import Set from './components/Set';
+import Flashcard from './components/Flashcard';
+import FlashcardStudyPage from './components/FlashcardStudyPage';
 import Register from './components/Register';
-import Home from "./components/Home";
-import About from "./components/About";
-import Navbar from "./components/Navbar";
-import Flashcard from "./components/Flashcard";
-import Set from "./components/Set";
-import FlashcardStudyPage from "./components/FlashcardStudyPage";
-import AuthContext from "./components/context/AuthContext"; // Create this context
-
-// Create AuthProvider component
-const AuthProvider = ({ children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [user, setUser] = useState(null);
-
-  const login = (userData) => {
-    setIsLoggedIn(true);
-    setUser(userData);
-  };
-
-  const logout = () => {
-    setIsLoggedIn(false);
-    setUser(null);
-  };
-
-  return (
-    <AuthContext.Provider value={{ isLoggedIn, user, login, logout }}>
-      {children}
-    </AuthContext.Provider>
-  );
-};
+import Navbar from './components/Navbar';
+import FlashcardStudy from "./components/FlashcardStudy"
+import AuthProvider from './components/context/AuthProvider'; // We'll create this below
 
 function App() {
   return (
@@ -43,9 +23,9 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/set" element={<Set />} />
             <Route path="/flashcards" element={<Flashcard />} />
-            <Route path="/register" element={<Register />} />
             <Route path="/flashcards/:id" element={<Flashcard />} />
             <Route path="/study/:id" element={<FlashcardStudyPage />} />
+            <Route path="/register" element={<Register />} />
           </Routes>
         </div>
       </div>
