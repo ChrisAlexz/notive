@@ -1,14 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../styles/Navbar.css';
 import logo from '../assets/214661508.png';
 import DropdownMenu from './DropdownMenu';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleInfo, faEnvelope, faFolderOpen, faHouse, faBolt } from '@fortawesome/free-solid-svg-icons';
+import { faCircleInfo, faFolderOpen, faHouse, faRectangleList } from '@fortawesome/free-solid-svg-icons';
+import AuthContext from './context/AuthContext';
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const [isLoggedIn] = React.useState(false); // Hard-coded or from AuthContext
+  const { isLoggedIn, user } = useContext(AuthContext);
+  
+  console.log("Navbar rendering, isLoggedIn:", isLoggedIn);
+  console.log("User in Navbar:", user);
 
   return (
     <div className="navbar">
@@ -17,29 +21,31 @@ const Navbar = () => {
       </Link>
       <ul>
         <li>
-          <Link to="/"><FontAwesomeIcon icon={faHouse} />  Home</Link>
+          <Link to="/"> Home</Link>
         </li>
         <li>
-          <Link to="/set"><FontAwesomeIcon icon={faFolderOpen} />  Sets</Link>
+          <Link to="/set"> Sets</Link>
         </li>
         <li>
-          <Link to="/flashcards"><FontAwesomeIcon icon={faBolt} />  Flashcards</Link>
+          <Link to="/flashcards"> Flashcards</Link>
         </li>
         <li>
-          <Link to="/about"><FontAwesomeIcon icon={faCircleInfo} />  About</Link>
+          <Link to="/About"> About</Link>
         </li>
       </ul>
       
-      {isLoggedIn ? (
-        <DropdownMenu />
-      ) : (
-        <button 
-          className="signup-button"
-          onClick={() => navigate('/register')}
-        >
-          Sign Up
-        </button>
-      )}
+      <div className="auth-section">
+        {isLoggedIn ? (
+          <DropdownMenu />
+        ) : (
+          <button 
+            className="signup-button"
+            onClick={() => navigate('/register')}
+          >
+            Sign Up
+          </button>
+        )}
+      </div>
     </div>
   );
 };

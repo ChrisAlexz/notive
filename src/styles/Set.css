@@ -1,7 +1,7 @@
 /* Set.css */
 .your-library {
   max-width: 900px;
-  margin: 40px auto;
+  margin: 120px auto 40px; /* Increased top margin */
   padding: 20px;
   text-align: center;
   font-family: 'Poppins', sans-serif;

@@ -2,11 +2,11 @@
 .study-container {
     display: flex;
     justify-content: center;
-    align-items: flex-start; /* Aligns the box at the top with spacing */
+    align-items: flex-start;
     min-height: 100vh;
     width: 100%;
-    padding-top: 50px; /* Adds space between the navbar and the white box */
-}
+    padding-top: 100px; /* Increased from 50px */
+  }
 
 
 .flashcard-study-box {

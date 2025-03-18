@@ -5,7 +5,8 @@
   align-items: center;
   min-height: 100vh;
   padding: 40px 20px;
-  background: #121212; /* Keeping your original background color */
+  padding-top: 140px; /* Increased from 120px */
+  background: #121212;
 }
 
 /* 👋 Welcome Section */

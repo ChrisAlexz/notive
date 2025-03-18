@@ -1,16 +1,18 @@
 /* index.css */
 html, body {
-  background: #171718;   /* Same color as .app-container */
+  background: #111111;   /* Same color as .app-container */
   min-height: 100vh;     /* Ensures full screen coverage */
   margin: 0;
   padding: 0;
 }
 
 .app-container {
+  background: #111111;
   width: 100vw;
   min-height: 100vh;
-  background: #171718;
 }
+
 .page-content {
-  padding-top: 100px; /* Creates space below navbar */
+  padding-top: 11px; /* Adjust based on navbar height */
+  min-height: calc(100vh - 100px); /* Optional: maintain full viewport height */
 }

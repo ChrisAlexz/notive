@@ -2,7 +2,7 @@
 .about-container {
     max-width: 800px;        /* or any width you prefer */
     margin: 0 auto;          /* centers the container on the page */
-    padding: 2rem 1rem;      /* top/bottom padding of 2rem, left/right of 1rem */
+    padding: 4rem 1rem;      /* top/bottom padding of 2rem, left/right of 1rem */
     text-align: center;      /* centers all text within this container */
   }
   

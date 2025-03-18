@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../supabase';
 import '../styles/Home.css';
+import AuthContext from './context/AuthContext';
 
 export default function Home() {
   const navigate = useNavigate();
   const [recentSets, setRecentSets] = useState([]);
+  const { user } = useContext(AuthContext);
 
-  // Fetch recent flashcard sets (limit 3)
   useEffect(() => {
     const fetchRecents = async () => {
       const { data, error } = await supabase
@@ -24,10 +25,15 @@ export default function Home() {
     fetchRecents();
   }, []);
 
+  const getWelcomeName = () => {
+    if (!user) return "Welcome Back!";
+    return `Welcome ${user.user_metadata?.name}!` || `Welcome ${user.email.split('@')[0]}!`;
+  };
+
   return (
     <div className="dashboard">
       <div className="intro-section">
-        <h1>Welcome Back!</h1>
+        <h1>{getWelcomeName()}</h1>
         <p>Start studying or create new flashcards.</p>
       </div>
 
@@ -51,8 +57,6 @@ export default function Home() {
                 onClick={() => navigate(`/flashcards/${set.id}`)}
               >
                 <h2>{set.title}</h2>
-                {/* If you want to show how many cards are in the set,
-                    you can do a second query or join to flashcard_cards */}
               </div>
             ))
           ) : (

@@ -1,21 +1,19 @@
-/* FLASHCARD ITEM CONTAINER */
 .flashcard-item {
-  /* Overall card styling */
   width: 100%;
-  max-width: 700px;       /* So it doesn't stretch too wide */
-  margin: 20px auto;      /* Center horizontally, add spacing */
-  background-color: #2e3856;
-  border: 2px solid #1f3885;
+  max-width: 900px;   /* Increased from 700px for a wider card */
+  margin: 20px auto;  /* Centers horizontally with some spacing */
+  
+  background-color: #2e3856;            /* Same dark blue shade */
+  border: 2px solid #394368;            /* A subtle border closer to #2e3856 */
   border-radius: 12px;
   padding: 20px;
   color: white;
   
-  /* Subtle shadow & animation for a "lifted card" feel */
+  /* Lifted card shadow + hover transition */
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
-/* Hover "lift" effect */
 .flashcard-item:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
