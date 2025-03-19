@@ -1,77 +1,218 @@
-/* Set.css */
-.your-library {
-  max-width: 900px;
-  margin: 120px auto 40px; /* Increased top margin */
+.set-container {
+  max-width: 1200px;
+  margin: 0 auto;
   padding: 20px;
-  text-align: center;
-  font-family: 'Poppins', sans-serif;
+  color: #fff;
+}
+
+.set-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.set-header h1 {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.add-set-btn {
+  background-color: #4facfe;
   color: white;
-}
-
-/* Flashcard Grid */
-.flashcard-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
-  justify-content: center;
-  padding: 20px;
-}
-
-/* Flashcard Set Styling */
-.flashcard-set {
-  background: #fff;
-  padding: 20px;
-  border-radius: 16px;
-  border: 1px solid #ddd;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease-in-out;
-  text-align: left;
-  position: relative;
-}
-
-.flashcard-set:hover {
-  transform: translateY(-5px);
-  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
-}
-
-.flashcard-set h2 {
-  font-size: 1.4rem;
-  margin-bottom: 10px;
-  color: #222;
-}
-
-.flashcard-set p {
-  font-size: 1rem;
-  color: #666;
-}
-
-/* Delete Button */
-.del-set {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  background: #ff4d4d;
   border: none;
-  color: white;
-  padding: 8px 10px;
-  border-radius: 50%;
+  border-radius: 4px;
+  padding: 10px 16px;
+  font-size: 1rem;
+  font-weight: 500;
   cursor: pointer;
-  font-size: 14px;
-  transition: background 0.3s ease-in-out;
+  transition: background-color 0.2s;
 }
 
-.del-set:hover {
-  background: #cc0000;
-  transform: scale(1.1);
+.add-set-btn:hover {
+  background-color: #45a0f5;
 }
 
-/* Responsive Design */
-@media (max-width: 600px) {
-  .flashcard-grid {
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  }
-  
-  .flashcard-set {
-    padding: 15px;
-  }
+.loading {
+  text-align: center;
+  padding: 40px;
+  font-size: 1.2rem;
+  color: #aaa;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  background-color: #222;
+  border-radius: 8px;
+  margin-top: 20px;
+}
+
+.empty-state p {
+  font-size: 1.2rem;
+  color: #aaa;
+  margin-bottom: 20px;
+}
+
+.empty-state button {
+  background-color: #4facfe;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 12px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.class-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.class-item {
+  background-color: #222;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.class-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  background-color: #333;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.class-header:hover {
+  background-color: #444;
+}
+
+.class-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.class-title h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.deck-count {
+  color: #aaa;
+  font-size: 0.9rem;
+}
+
+.expand-icon {
+  color: #aaa;
+  width: 16px;
+}
+
+.class-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.class-actions button {
+  background-color: transparent;
+  border: none;
+  color: #aaa;
+  padding: 6px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.class-actions button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.add-deck-btn:hover {
+  color: #4facfe;
+}
+
+.delete-class-btn:hover {
+  color: #ff4d4d;
+}
+
+.deck-list {
+  padding: 8px 16px 16px;
+}
+
+.deck-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  margin: 8px 0;
+  background-color: #2a2a2a;
+  border-radius: 6px;
+  transition: background-color 0.2s;
+}
+
+.deck-item:hover {
+  background-color: #383838;
+}
+
+.deck-info {
+  flex: 1;
+  cursor: pointer;
+}
+
+.deck-info h4 {
+  margin: 0;
+  font-weight: 500;
+  font-size: 1.1rem;
+}
+
+.deck-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.deck-actions button {
+  background-color: transparent;
+  border: none;
+  color: #aaa;
+  padding: 6px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.edit-deck-btn:hover {
+  color: #4facfe;
+  background-color: rgba(79, 172, 254, 0.1);
+}
+
+.delete-deck-btn:hover {
+  color: #ff4d4d;
+  background-color: rgba(255, 77, 77, 0.1);
+}
+
+.empty-decks {
+  text-align: center;
+  padding: 16px;
+  color: #888;
+}
+
+.add-first-deck {
+  background-color: transparent;
+  border: 1px solid #4facfe;
+  color: #4facfe;
+  padding: 8px 16px;
+  border-radius: 4px;
+  margin-top: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.add-first-deck:hover {
+  background-color: rgba(79, 172, 254, 0.1);
 }

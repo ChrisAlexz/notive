@@ -1,26 +1,21 @@
-import React, { useContext, useState, useRef, useEffect } from 'react';
+// src/components/DropdownMenu.jsx
+import React, { useRef, useEffect, useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import AuthContext from './context/AuthContext';
+import UserAuthContext from './context/UserAuthContext'; // <-- changed
 import '../styles/DropdownMenu.css';
 
 const DropdownMenu = () => {
-  const { user, logout } = useContext(AuthContext);
+  const { user, logout } = useContext(UserAuthContext); // <-- changed
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
-  // Debugging log
-  console.log("DropdownMenu rendering, isOpen:", isOpen);
-  console.log("User data:", user);
-
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setIsOpen(false);
       }
     };
-
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
@@ -28,28 +23,26 @@ const DropdownMenu = () => {
   }, []);
 
   const handleSignOut = async () => {
-    console.log("Sign out clicked");
     await logout();
     setIsOpen(false);
-    navigate('/'); // Navigate to home page after sign out
+    navigate('/');
   };
 
   const toggleDropdown = () => {
-    console.log("Toggle dropdown, current state:", isOpen);
     setIsOpen(!isOpen);
   };
 
+  const avatarUrl = user?.user_metadata?.picture;
   const displayName = user?.user_metadata?.name || user?.email?.split('@')[0] || 'User';
-  const initials = displayName.charAt(0).toUpperCase();
 
   return (
     <div className="dropdown-container" ref={dropdownRef}>
-      <div 
-        className="profile-icon" 
-        onClick={toggleDropdown}
-        style={{ backgroundColor: '#4facfe', cursor: 'pointer' }}
-      >
-        {initials}
+      <div className="profile-icon" onClick={toggleDropdown}>
+        {avatarUrl ? (
+          <img src={avatarUrl} alt="Profile" className="profile-avatar" />
+        ) : (
+          displayName.charAt(0).toUpperCase()
+        )}
       </div>
       
       {isOpen && (

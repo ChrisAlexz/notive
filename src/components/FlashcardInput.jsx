@@ -1,3 +1,4 @@
+// src/components/FlashcardInput.jsx
 import React, { useState } from 'react';
 import "../styles/FlashcardInput.css";
 
@@ -33,7 +34,7 @@ export default function FlashcardInput({ addFlashcard, disabled }) {
             setFront(e.target.value);
             autoResizeTextarea(e);
           }}
-          style={{ overflow: 'hidden', resize: 'none' }}
+          style={{ overflow: 'hidden', resize: 'none', color: 'black' }}
         />
       </div>
 
@@ -47,15 +48,20 @@ export default function FlashcardInput({ addFlashcard, disabled }) {
             setBack(e.target.value);
             autoResizeTextarea(e);
           }}
-          style={{ overflow: 'hidden', resize: 'none' }}
+          style={{ overflow: 'hidden', resize: 'none', color: 'black' }}
         />
       </div>
 
-      <button className="add-flashcard-btn" onClick={handleAdd}>
+      <button
+        className="add-flashcard-btn"
+        onClick={handleAdd}
+        disabled={disabled}
+      >
         Add Flashcard
       </button>
+
       {disabled && (
-        <p style={{ color: "red" }}>Please Choose a Title</p>
+        <p style={{ color: "red" }}>Please enter a Deck Name first</p>
       )}
     </div>
   );

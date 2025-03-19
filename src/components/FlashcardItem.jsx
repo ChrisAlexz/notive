@@ -1,3 +1,4 @@
+// src/components/FlashcardItem.jsx
 import React, { useRef, useEffect } from 'react';
 import '../styles/FlashcardList.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -7,7 +8,7 @@ const FlashcardItem = ({ index, front, back, updateFlashcard, onDelete }) => {
   const frontRef = useRef(null);
   const backRef = useRef(null);
 
-  // Auto-resize the textarea so it grows with content
+  // Auto-resize helper
   const autoResize = (element) => {
     if (element) {
       element.style.height = 'auto';
@@ -15,23 +16,16 @@ const FlashcardItem = ({ index, front, back, updateFlashcard, onDelete }) => {
     }
   };
 
-  // Handle front text change
   const handleFrontChange = (e) => {
     autoResize(e.target);
-    if (updateFlashcard) {
-      updateFlashcard(index, { front: e.target.value });
-    }
+    updateFlashcard(index, { front: e.target.value });
   };
 
-  // Handle back text change
   const handleBackChange = (e) => {
     autoResize(e.target);
-    if (updateFlashcard) {
-      updateFlashcard(index, { back: e.target.value });
-    }
+    updateFlashcard(index, { back: e.target.value });
   };
 
-  // Run auto-resize whenever front/back text changes (or on mount)
   useEffect(() => {
     autoResize(frontRef.current);
     autoResize(backRef.current);
@@ -39,7 +33,6 @@ const FlashcardItem = ({ index, front, back, updateFlashcard, onDelete }) => {
 
   return (
     <div className="flashcard-item">
-      {/* Top row with index & delete icon */}
       <div className="flashcard-top-row">
         <div className="index-num">{index + 1}</div>
         <button className="delete-btn" onClick={() => onDelete(index)}>
@@ -47,7 +40,6 @@ const FlashcardItem = ({ index, front, back, updateFlashcard, onDelete }) => {
         </button>
       </div>
 
-      {/* Front & Back sections side by side */}
       <div className="front-back">
         <div className="front">
           <label>
@@ -58,7 +50,7 @@ const FlashcardItem = ({ index, front, back, updateFlashcard, onDelete }) => {
               value={front}
               onChange={handleFrontChange}
               maxLength={1850}
-              style={{ overflow: 'hidden', resize: 'none' }}
+              style={{ overflow: 'hidden', resize: 'none', color: 'white' }}
             />
           </label>
         </div>
@@ -72,7 +64,7 @@ const FlashcardItem = ({ index, front, back, updateFlashcard, onDelete }) => {
               value={back}
               onChange={handleBackChange}
               maxLength={1850}
-              style={{ overflow: 'hidden', resize: 'none' }}
+              style={{ overflow: 'hidden', resize: 'none', color: 'white' }}
             />
           </label>
         </div>

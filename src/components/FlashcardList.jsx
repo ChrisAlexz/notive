@@ -1,3 +1,4 @@
+// src/components/FlashcardList.jsx
 import React from 'react';
 import FlashcardItem from './FlashcardItem';
 import '../styles/FlashcardList.css';
@@ -10,7 +11,7 @@ const FlashcardList = ({ flashcards, updateFlashcard, onDelete }) => {
       ) : (
         flashcards.map((card, index) => (
           <FlashcardItem
-            key={card.id || index}
+            key={card.id}
             index={index}
             front={card.front}
             back={card.back}

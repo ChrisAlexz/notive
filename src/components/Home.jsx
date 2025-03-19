@@ -1,35 +1,59 @@
-import React, { useContext, useEffect, useState } from 'react';
+// src/components/Home.jsx
+import React, { useContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../supabase';
 import '../styles/Home.css';
-import AuthContext from './context/AuthContext';
+import UserAuthContext from './context/UserAuthContext'; // <-- changed
+import ClassDeckModal from './ClassDeckModal';
 
 export default function Home() {
   const navigate = useNavigate();
   const [recentSets, setRecentSets] = useState([]);
-  const { user } = useContext(AuthContext);
+  const { user } = useContext(UserAuthContext); // <-- changed
+  const [showModal, setShowModal] = useState(false);
+  
 
   useEffect(() => {
     const fetchRecents = async () => {
       const { data, error } = await supabase
         .from('flashcard_sets')
         .select('*')
+        .eq('user_id', user?.id) // If user is null, this yields no results
         .order('created_at', { ascending: false })
         .limit(3);
+
       if (error) {
         console.error('Error fetching recent flashcards:', error);
       } else {
         setRecentSets(data || []);
       }
     };
-    fetchRecents();
-  }, []);
+
+    // Only fetch if user is defined
+    if (user) {
+      fetchRecents();
+    }
+  }, [user]);
 
   const getWelcomeName = () => {
     if (!user) return "Welcome Back!";
     return `Welcome ${user.user_metadata?.name}!` || `Welcome ${user.email.split('@')[0]}!`;
   };
 
+  const handleNewSetClick = () => {
+    setShowModal(true);
+  };
+
+  // Just for demonstration
+  const handleModalClose = () => {
+    console.log('Home.jsx: handleModalClose called. Hiding modal overlay.');
+    setShowModal(false);
+  };
+
+  const handleSetCreated = (deckId) => {
+    // do any callback logic if needed
+    console.log('Home.jsx: onSuccess -> deck created with id:', deckId);
+  };
   return (
     <div className="dashboard">
       <div className="intro-section">
@@ -38,10 +62,7 @@ export default function Home() {
       </div>
 
       <div className="action-area">
-        <button
-          className="new-set-button"
-          onClick={() => navigate('/flashcards')}
-        >
+        <button className="new-set-button" onClick={handleNewSetClick}>
           + New Set
         </button>
       </div>
@@ -64,6 +85,13 @@ export default function Home() {
           )}
         </div>
       </div>
+
+      {showModal && (
+        <ClassDeckModal 
+          onClose={handleModalClose} 
+          onSuccess={handleSetCreated}
+        />
+      )}
     </div>
   );
 }

@@ -1,3 +1,4 @@
+// src/App.js
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -9,15 +10,17 @@ import Flashcard from './components/Flashcard';
 import FlashcardStudyPage from './components/FlashcardStudyPage';
 import Register from './components/authentication/Register';
 import Navbar from './components/Navbar';
-import FlashcardStudy from "./components/FlashcardStudy"
-import AuthProvider from './components/context/AuthProvider'; // We'll create this below
+import FlashcardStudy from './components/FlashcardStudy';
+
+// Import the named export from your new file
+import { UserAuthProvider } from './components/context/UserAuthContext';
 
 function App() {
   return (
-    <AuthProvider>
+    <UserAuthProvider>
       <div className="app-container">
         <Navbar />
-        <div className='page-content' >
+        <div className="page-content">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
@@ -29,7 +32,7 @@ function App() {
           </Routes>
         </div>
       </div>
-    </AuthProvider>
+    </UserAuthProvider>
   );
 }
 

@@ -141,6 +141,7 @@ button:hover {
   font-size: 16px;
   font-weight: bold;
   white-space: nowrap; /* Prevents line breaks */
+  color:black;
 }
 
 .flashcard-page .flashcard-title-container input {
@@ -150,6 +151,7 @@ button:hover {
   margin-left: 10px;
   border: 1px solid #ccc;
   background: white;
+  color:black;
 }
 .flashcard-page .flashcard-title-container, .flashcard-type-container {
   margin-left: 0;       /* reset this */
