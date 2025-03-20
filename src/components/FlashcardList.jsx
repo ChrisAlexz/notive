@@ -11,7 +11,7 @@ const FlashcardList = ({ flashcards, updateFlashcard, onDelete }) => {
       ) : (
         flashcards.map((card, index) => (
           <FlashcardItem
-            key={card.id}
+            key={card.id || index}
             index={index}
             front={card.front}
             back={card.back}

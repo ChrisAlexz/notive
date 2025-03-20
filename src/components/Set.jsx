@@ -1,37 +1,45 @@
 // src/components/Set.jsx
+
 import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../supabase';
-import UserAuthContext from './context/UserAuthContext'; // <-- changed
+import UserAuthContext from './context/UserAuthContext';
 import ClassDeckModal from './ClassDeckModal';
 import '../styles/Set.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronRight, faTrash, faEdit, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 export default function Set() {
-  const { user } = useContext(UserAuthContext); // <-- changed
+  const { user } = useContext(UserAuthContext);
   const [classes, setClasses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [expandedClasses, setExpandedClasses] = useState({});
   const [showModal, setShowModal] = useState(false);
   const [selectedClassId, setSelectedClassId] = useState(null);
+
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user) fetchClasses();
+    if (user) {
+      fetchClasses();
+    }
   }, [user]);
 
+  // Fetch classes + their decks
   const fetchClasses = async () => {
     setLoading(true);
     try {
       const { data, error } = await supabase
         .from('classes')
+        // also retrieve flashcard_sets(*) for each class
         .select(`*, flashcard_sets (*)`)
         .eq('user_id', user.id)
         .order('name', { ascending: true });
 
       if (!error && data) {
         setClasses(data);
+
+        // Expand each class by default
         const expanded = {};
         data.forEach(cls => {
           expanded[cls.id] = true;
@@ -96,6 +104,7 @@ export default function Set() {
     navigate(`/flashcards/${deckId}`);
   };
 
+  // IMPORTANT: We now pass the event parameter (e) here
   const handleStudyDeck = (deckId, e) => {
     e.stopPropagation();
     navigate(`/study/${deckId}`);
@@ -110,7 +119,10 @@ export default function Set() {
     <div className="set-container">
       <div className="set-header">
         <h1>Your Flashcard Sets</h1>
-        <button className="add-set-btn" onClick={() => setShowModal(true)}>
+        <button
+          className="add-set-btn"
+          onClick={() => setShowModal(true)}
+        >
           + New Set
         </button>
       </div>
@@ -118,13 +130,18 @@ export default function Set() {
       {classes.length === 0 ? (
         <div className="empty-state">
           <p>You don't have any classes or flashcard sets yet.</p>
-          <button onClick={() => setShowModal(true)}>Create Your First Set</button>
+          <button onClick={() => setShowModal(true)}>
+            Create Your First Set
+          </button>
         </div>
       ) : (
         <div className="class-list">
           {classes.map(cls => (
             <div key={cls.id} className="class-item">
-              <div className="class-header" onClick={() => toggleClass(cls.id)}>
+              <div
+                className="class-header"
+                onClick={() => toggleClass(cls.id)}
+              >
                 <div className="class-title">
                   <FontAwesomeIcon
                     icon={expandedClasses[cls.id] ? faChevronDown : faChevronRight}
@@ -175,7 +192,14 @@ export default function Set() {
                   ) : (
                     cls.flashcard_sets.map(deck => (
                       <div key={deck.id} className="deck-item">
-                        <div className="deck-info" onClick={() => handleStudyDeck(deck.id)}>
+                        {/* 
+                          Pass both deck.id AND the event to handleStudyDeck 
+                          so we can use e.stopPropagation() 
+                        */}
+                        <div
+                          className="deck-info"
+                          onClick={(e) => handleStudyDeck(deck.id, e)}
+                        >
                           <h4>{deck.title}</h4>
                         </div>
                         <div className="deck-actions">

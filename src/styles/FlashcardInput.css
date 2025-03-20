@@ -91,3 +91,10 @@
     opacity: 0.6;
     cursor: not-allowed;
   }
+  .cloze-revealed {
+    background-color: #ffff99;
+    color: #333;
+    padding: 0 3px;
+    border-radius: 3px;
+    font-weight: bold;
+  }

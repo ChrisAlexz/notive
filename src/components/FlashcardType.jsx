@@ -1,4 +1,3 @@
-// src/components/FlashcardType.jsx
 import React from 'react';
 
 export default function FlashcardType({ type, setType, disabled }) {
@@ -9,7 +8,7 @@ export default function FlashcardType({ type, setType, disabled }) {
         value={type}
         onChange={(e) => setType(e.target.value)}
         disabled={disabled}
-        style={{ color: 'black' }} // if you want black text in the dropdown
+        style={{ color: 'black' }}
       >
         <option value="Basic">Basic</option>
         <option value="Cloze">Cloze</option>

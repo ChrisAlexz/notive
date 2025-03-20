@@ -1,5 +1,3 @@
-// src/components/authentication/Register.jsx
-
 import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import UserAuthContext from '../context/UserAuthContext';
@@ -12,12 +10,14 @@ export default function Register() {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  // We’ll use "error" for sign-up errors, "message" for success info
   const [error, setError] = useState(null);
+  const [message, setMessage] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  // You can update this with your own criteria
+  // Optional: front-end validation
   const validateInputs = () => {
-    // Very basic email pattern check
     const emailRegex = /^\S+@\S+\.\S+$/;
     if (!emailRegex.test(email)) {
       return 'Please enter a valid email address.';
@@ -31,8 +31,8 @@ export default function Register() {
   const handleSignUp = async (e) => {
     e.preventDefault();
     setError(null);
+    setMessage(null);
 
-    // Basic front-end checks
     const validationError = validateInputs();
     if (validationError) {
       setError(validationError);
@@ -40,110 +40,110 @@ export default function Register() {
     }
 
     setLoading(true);
-
     try {
-      // 1) Sign up user in Supabase
-      const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
+      // 1. Create a new user (unconfirmed) in Supabase
+      const { data, error: signUpError } = await supabase.auth.signUp({
         email,
         password,
         options: {
+          // The user must click a link in their email.
+          // This is the redirect URL after they click "Confirm Email"
+          emailRedirectTo: 'http://localhost:3000/login',
           data: {
-            // Default name is whatever before '@' in email
+            // some default user_metadata
             name: email.split('@')[0],
-            // Provide a default avatar if you want:
             picture: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
           }
         }
       });
-      if (signUpError) {
-        // Common error might be "User already registered"
-        throw new Error(signUpError.message);
-      }
+      if (signUpError) throw signUpError;
 
-      // 2) Immediately sign in
-      const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
-        email,
-        password
-      });
-      if (signInError) {
-        throw new Error(signInError.message);
-      }
+      // 2. Tell them to check their email
+      setMessage(
+        `A confirmation link has been sent to ${email}. Please check your inbox (and spam folder) to verify your account.`
+      );
 
-      // 3) Update local context
-      login(signInData.user);
+      // We do NOT log them in immediately. They are unconfirmed until they click the link.
 
-      // 4) Navigate to homepage
-      navigate('/');
     } catch (err) {
+      // e.g. "User already registered" or "Invalid email"
       setError(err.message || 'An error occurred during sign-up.');
     } finally {
       setLoading(false);
     }
   };
 
+  // (Optional) If you still want Google sign-in
   const handleGoogleSignIn = async () => {
     setLoading(true);
     setError(null);
-
-    // If you have set "http://localhost:3000" as the "Site URL" in Supabase
-    // and configured Google to match
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
-      options: {
-        redirectTo: 'http://localhost:3000'
-      }
+      options: { redirectTo: 'http://localhost:3000' }
     });
-
     if (error) setError(error.message);
-    // We don't setLoading(false) because the user is redirected.
+    // no setLoading(false) because redirect
   };
 
   return (
     <div className="register-container">
       <h2>Create an Account</h2>
+
+      {/* Show errors if any */}
       {error && <div className="alert alert-danger">{error}</div>}
 
-      <form className="register-form" onSubmit={handleSignUp}>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
+      {/* Show success message if any */}
+      {message && <div className="alert alert-success">{message}</div>}
 
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
+      {/* If the user hasn’t gotten the success message, show the sign-up form. 
+          If you prefer, you can also keep the form visible so they can re-try with a different email. */}
+      {!message && (
+        <form className="register-form" onSubmit={handleSignUp}>
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
 
-        <button type="submit" disabled={loading}>
-          {loading ? 'Signing up...' : 'Sign Up'}
-        </button>
-      </form>
+          <input
+            type="password"
+            placeholder="Password (min 6 chars)"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
 
-      <p style={{ margin: '20px 0' }}>Or</p>
+          <button type="submit" disabled={loading}>
+            {loading ? 'Signing up...' : 'Sign Up'}
+          </button>
+        </form>
+      )}
 
-      <button
-        className="google-button"
-        onClick={handleGoogleSignIn}
-        disabled={loading}
-      >
-        Continue with Google
-      </button>
+      {/* Only show these if user hasn’t confirmed */}
+      {!message && (
+        <>
+          <p style={{ margin: '20px 0' }}>Or</p>
+          <button
+            className="google-button"
+            onClick={handleGoogleSignIn}
+            disabled={loading}
+          >
+            Continue with Google
+          </button>
 
-      <p style={{ color: 'white' }}>
-        Already have an account?{' '}
-        <span
-          style={{ marginLeft: '5px', cursor: 'pointer', color: '#4facfe' }}
-          onClick={() => navigate('/login')}
-        >
-          Log In
-        </span>
-      </p>
+          <p style={{ color: 'white' }}>
+            Already have an account?{' '}
+            <span
+              style={{ marginLeft: '5px', cursor: 'pointer', color: '#4facfe' }}
+              onClick={() => navigate('/login')}
+            >
+              Log In
+            </span>
+          </p>
+        </>
+      )}
     </div>
   );
 }

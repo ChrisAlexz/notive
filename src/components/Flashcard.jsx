@@ -196,6 +196,7 @@ export default function Flashcard() {
         <FlashcardInput
           addFlashcard={addFlashcard}
           disabled={!title.trim()}
+          type={type}
         />
 
         {showSuccess && (

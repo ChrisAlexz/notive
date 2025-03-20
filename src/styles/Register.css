@@ -1,4 +1,6 @@
 /* Register.css */
+/* Register.css */
+
 .register-container {
   max-width: 440px;
   margin: 100px auto 40px;
@@ -46,6 +48,11 @@
   margin-top: 1rem;
 }
 
+.register-form button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 .google-button {
   background: #fff;
   color: #111;
@@ -63,13 +70,27 @@
   background: #f3f3f3;
 }
 
-.alert.alert-danger {
-  background: #ff4757;
-  color: white;
-  padding: 12px;
-  border-radius: 8px;
-  margin-bottom: 1.5rem;
+.alert {
   display: flex;
   align-items: center;
   gap: 10px;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+/* Danger style for errors */
+.alert-danger {
+  background: #ff4757;
+  color: white;
+  border: 1px solid #ff4757;
+}
+
+/* Success style for confirmations */
+.alert-success {
+  background: #28a745; /* typical green alert color */
+  color: white;
+  border: 1px solid #28a745;
 }
