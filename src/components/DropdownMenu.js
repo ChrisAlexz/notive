@@ -1,15 +1,15 @@
-// src/components/DropdownMenu.jsx
 import React, { useRef, useEffect, useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import UserAuthContext from './context/UserAuthContext'; // <-- changed
+import UserAuthContext from './context/UserAuthContext';
 import '../styles/DropdownMenu.css';
 
 const DropdownMenu = () => {
-  const { user, logout } = useContext(UserAuthContext); // <-- changed
+  const { user, logout } = useContext(UserAuthContext);
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
+  // Keep existing useEffect and handlers the same
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -32,8 +32,15 @@ const DropdownMenu = () => {
     setIsOpen(!isOpen);
   };
 
-  const avatarUrl = user?.user_metadata?.picture;
-  const displayName = user?.user_metadata?.name || user?.email?.split('@')[0] || 'User';
+  // Updated avatar URL retrieval
+  const googleIdentity = user?.identities?.find(
+    (identity) => identity.provider === 'google'
+  );
+  const avatarUrl = googleIdentity?.identity_data?.avatar_url || 
+                    user?.user_metadata?.picture;
+  const displayName = user?.user_metadata?.name || 
+                     user?.email?.split('@')[0] || 
+                     'User';
 
   return (
     <div className="dropdown-container" ref={dropdownRef}>

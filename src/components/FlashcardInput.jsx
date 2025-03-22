@@ -8,8 +8,12 @@ export default function FlashcardInput({ addFlashcard, disabled, type }) {
   const frontSelectionRange = useRef(null);
   const backSelectionRange = useRef(null);
   const [activeEditor, setActiveEditor] = useState(null);
+  const [contentKey, setContentKey] = useState(0);
+  
+  // Add state variables to track content
+  const [frontContent, setFrontContent] = useState('');
+  const [backContent, setBackContent] = useState('');
 
-  // Track selection changes for front editor
   const handleFrontSelection = () => {
     setActiveEditor(frontRef);
     const selection = window.getSelection();
@@ -18,7 +22,6 @@ export default function FlashcardInput({ addFlashcard, disabled, type }) {
     }
   };
 
-  // Track selection changes for back editor
   const handleBackSelection = () => {
     setActiveEditor(backRef);
     const selection = window.getSelection();
@@ -27,7 +30,19 @@ export default function FlashcardInput({ addFlashcard, disabled, type }) {
     }
   };
 
-  // Handle Cloze button click
+  // Track content changes
+  const handleFrontContentChange = () => {
+    if (frontRef.current) {
+      setFrontContent(frontRef.current.innerHTML);
+    }
+  };
+
+  const handleBackContentChange = () => {
+    if (backRef.current) {
+      setBackContent(backRef.current.innerHTML);
+    }
+  };
+
   const handleCloze = () => {
     if (!frontRef.current) return;
     const selection = window.getSelection();
@@ -45,16 +60,25 @@ export default function FlashcardInput({ addFlashcard, disabled, type }) {
     range.deleteContents();
     range.insertNode(span);
 
-    // Move cursor after the cloze
     const newRange = document.createRange();
     newRange.setStartAfter(span);
     newRange.collapse(true);
     selection.removeAllRanges();
     selection.addRange(newRange);
     frontRef.current.focus();
+    
+    // Update the front content after adding cloze
+    handleFrontContentChange();
   };
 
-  // Add flashcard with current content
+  const clearContent = () => {
+    if (frontRef.current) frontRef.current.innerHTML = '';
+    if (backRef.current) backRef.current.innerHTML = '';
+    setFrontContent('');
+    setBackContent('');
+    setContentKey(prev => prev + 1);
+  };
+
   const handleAdd = () => {
     const front = frontRef.current?.innerHTML || '';
     const back = backRef.current?.innerHTML || '';
@@ -67,13 +91,23 @@ export default function FlashcardInput({ addFlashcard, disabled, type }) {
       addFlashcard(front, back);
     }
 
-    // Clear content
-    if (frontRef.current) frontRef.current.innerHTML = '';
-    if (backRef.current) backRef.current.innerHTML = '';
+    clearContent();
+  };
+
+  // Check if content is valid based on type
+  const isContentValid = () => {
+    const hasFrontContent = frontContent.trim() !== '';
+    const hasBackContent = backContent.trim() !== '';
+    
+    if (type === 'Cloze') {
+      return hasFrontContent;
+    } else {
+      return hasFrontContent && hasBackContent;
+    }
   };
 
   return (
-    <div className="flashcard-input">
+    <div className="flashcard-input" key={contentKey}>
       <h4>Front Side {type === 'Cloze' && <span>(Required)</span>}</h4>
       
       {!disabled && (
@@ -91,6 +125,7 @@ export default function FlashcardInput({ addFlashcard, disabled, type }) {
           onFocus={handleFrontSelection}
           onMouseUp={handleFrontSelection}
           onKeyUp={handleFrontSelection}
+          onInput={handleFrontContentChange}
           placeholder={type === 'Cloze' 
             ? "Enter text with content to be hidden..." 
             : "Enter front side..."}
@@ -114,6 +149,7 @@ export default function FlashcardInput({ addFlashcard, disabled, type }) {
           onFocus={handleBackSelection}
           onMouseUp={handleBackSelection}
           onKeyUp={handleBackSelection}
+          onInput={handleBackContentChange}
           placeholder={type === 'Cloze' 
             ? "Enter additional info (optional)..." 
             : "Enter back side..."}
@@ -134,7 +170,7 @@ export default function FlashcardInput({ addFlashcard, disabled, type }) {
       <button 
         className="add-flashcard-btn" 
         onClick={handleAdd} 
-        disabled={disabled || (type !== 'Cloze' && (!frontRef.current?.innerHTML?.trim() || !backRef.current?.innerHTML?.trim())) || (type === 'Cloze' && !frontRef.current?.innerHTML?.trim())}
+        disabled={disabled || !isContentValid()}
       >
         Add Flashcard
       </button>

@@ -1,8 +1,7 @@
-// src/components/Navbar.jsx
 import React, { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../styles/Navbar.css';
-import logo from '../assets/214661508.png';
+import logo from '../assets/jacal.png';
 import DropdownMenu from './DropdownMenu';
 
 // Import the *default* export from UserAuthContext
@@ -27,7 +26,7 @@ const Navbar = () => {
       </ul>
       <div className="auth-section">
         {isLoggedIn ? (
-          <DropdownMenu />
+          <DropdownMenu user={user} />
         ) : (
           <button
             className="signup-button"

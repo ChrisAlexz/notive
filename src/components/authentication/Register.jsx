@@ -74,16 +74,25 @@ export default function Register() {
   };
 
   // (Optional) If you still want Google sign-in
-  const handleGoogleSignIn = async () => {
-    setLoading(true);
-    setError(null);
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: { redirectTo: 'http://localhost:3000' }
-    });
-    if (error) setError(error.message);
-    // no setLoading(false) because redirect
-  };
+// In the handleGoogleSignIn function:
+const handleGoogleSignIn = async () => {
+  setLoading(true);
+  setError(null);
+  const { error } = await supabase.auth.signInWithOAuth({
+    provider: 'google',
+    options: {
+      redirectTo: 'http://localhost:3000',
+      // Add these query parameters
+      queryParams: {
+        access_type: 'offline',
+        prompt: 'consent',
+        scope: 'openid profile email',  // Ensure profile scope is included
+      },
+    },
+  });
+  if (error) setError(error.message);
+  // no setLoading(false) because redirect
+};
 
   return (
     <div className="register-container">

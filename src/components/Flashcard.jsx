@@ -72,8 +72,13 @@ export default function Flashcard() {
 
   // Add a new flashcard
   const addFlashcard = async (front, back) => {
-    if (!front.trim() || !back.trim()) {
+    // Add trim validation
+    if (type === 'Basic' && (!front.trim() || !back.trim())) {
       console.error("Empty front/back — not inserting");
+      return;
+    }
+    if (type === 'Cloze' && !front.trim()) {
+      console.error("Empty front — not inserting");
       return;
     }
 
