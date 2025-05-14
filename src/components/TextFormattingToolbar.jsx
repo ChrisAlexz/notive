@@ -87,14 +87,26 @@ const TextFormattingToolbar = ({ editorRef, selectionRangeRef, activeFormats = {
           newActiveFormats.subscript = !activeFormats.subscript;
           newActiveFormats.superscript = false; // Can't be both
           break;
-        case 'removeFormat':
-          // Reset all formats
-          newActiveFormats.bold = false;
-          newActiveFormats.italic = false;
-          newActiveFormats.underline = false;
-          newActiveFormats.superscript = false;
-          newActiveFormats.subscript = false;
-          break;
+          case 'removeFormat':
+            if (selectionRangeRef?.current) {
+              const range = selectionRangeRef.current;
+              const plainText = range.toString();
+              range.deleteContents();
+              range.insertNode(document.createTextNode(plainText));
+              const selection = window.getSelection();
+              selection.removeAllRanges();
+              selection.addRange(range);
+            } else {
+              document.execCommand('removeFormat');
+            }
+          
+            newActiveFormats.bold = false;
+            newActiveFormats.italic = false;
+            newActiveFormats.underline = false;
+            newActiveFormats.superscript = false;
+            newActiveFormats.subscript = false;
+            break;
+          
         default:
           break;
       }

@@ -1,18 +1,22 @@
-/* index.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom layout styles */
 html, body {
-  background: #111111;   /* Same color as .app-container */
-  min-height: 100vh;     /* Ensures full screen coverage */
+  background: #121212;     /* Match navbar & dark pages */
+  color: #ffffff;
+  min-height: 100vh;
   margin: 0;
   padding: 0;
 }
 
 .app-container {
-  background: #111111;
   width: 100vw;
   min-height: 100vh;
 }
 
 .page-content {
-  padding-top: 11px; /* Adjust based on navbar height */
-  min-height: calc(100vh - 100px); /* Optional: maintain full viewport height */
+  padding-top: 11px;
+  min-height: calc(100vh - 100px);
 }

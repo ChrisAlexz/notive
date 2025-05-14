@@ -1,7 +1,10 @@
 // src/App.js
+
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import "bootstrap/dist/css/bootstrap.min.css";
+
+// Removed Bootstrap to prevent layout conflicts
+// import "bootstrap/dist/css/bootstrap.min.css";
 
 import Home from './components/Home';
 import About from './components/About';
@@ -11,16 +14,14 @@ import FlashcardStudyPage from './components/FlashcardStudyPage';
 import Register from './components/authentication/Register';
 import Navbar from './components/Navbar';
 import FlashcardStudy from './components/FlashcardStudy';
-
-// Import the named export from your new file
 import { UserAuthProvider } from './components/context/UserAuthContext';
 
 function App() {
   return (
     <UserAuthProvider>
-      <div className="app-container">
+      <div className="app-container bg-gray-50 min-h-screen text-gray-900">
         <Navbar />
-        <div className="page-content">
+        <div className="page-content px-4 py-6">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />

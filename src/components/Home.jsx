@@ -68,7 +68,7 @@ export default function Home() {
       </div>
 
       <div className="recents-section">
-        <h2>Recent Flashcard Sets</h2>
+        <h2>Recent Flashcard Decks</h2>
         <div className="recents-grid">
           {recentSets.length > 0 ? (
             recentSets.map((set) => (
